@@ -1,6 +1,7 @@
 /build
 app-release.apk
 app.iml
+ChristenDom.iml
 .gradle
 /local.properties
 /.idea/workspace.xml
