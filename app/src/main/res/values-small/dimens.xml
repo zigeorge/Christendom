@@ -1,0 +1,45 @@
+<resources>
+
+    <!-- small -->
+
+    <dimen name="dim2">1dp</dimen>
+    <dimen name="dim3">2dp</dimen>
+    <dimen name="dim5">4dp</dimen>
+    <dimen name="dim8">6dp</dimen>
+    <dimen name="dim10">8dp</dimen>
+    <dimen name="dim15">10dp</dimen>
+    <dimen name="dim20">15dp</dimen>
+    <dimen name="dim30">23dp</dimen>
+    <dimen name="dim32">25dp</dimen>
+    <dimen name="dim35">26dp</dimen>
+    <dimen name="dim40">30dp</dimen>
+    <dimen name="dim50">38dp</dimen>
+    <dimen name="dim80">60dp</dimen>
+    <dimen name="dim100">75dp</dimen>
+    <dimen name="dim120">90dp</dimen>
+    <dimen name="dim150">113dp</dimen>
+    <dimen name="dim200">150dp</dimen>
+    <dimen name="dim250">180dp</dimen>
+    <dimen name="listWidth">180dp</dimen>
+    <dimen name="dim300">200dp</dimen>
+    <dimen name="dim350">263dp</dimen>
+    <dimen name="dim400">300dp</dimen>
+    <dimen name="dim70">55dp</dimen>
+    
+    <dimen name="dimTex70">55sp</dimen>
+    <dimen name="dimTex12">9sp</dimen>
+    <dimen name="dimTex14">11sp</dimen>
+    <dimen name="dimTex15">12sp</dimen>
+    <dimen name="dimTex16">13sp</dimen>
+    <dimen name="dimTex18">14sp</dimen>
+    <dimen name="dimTex20">15sp</dimen>
+    <dimen name="dimTex25">17sp</dimen>
+    <dimen name="dimTex30">23sp</dimen>
+    <dimen name="dimTex35">27sp</dimen>
+    <dimen name="profile_thumb_width">55dp</dimen>
+    <dimen name="profile_thumb_height">56dp</dimen>
+    <dimen name="profile_pic_width">48dp</dimen>
+    <dimen name="profile_pic_height">48dp</dimen>
+    <dimen name="compos_pic">38dp</dimen>
+
+</resources>

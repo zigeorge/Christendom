@@ -1,0 +1,38 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/dim30"
+    tools:context="christian.network.SelectchurchActivity">
+
+    <EditText
+        android:id="@+id/etSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dim10"
+        android:elevation="@dimen/dim10"
+        android:hint="Church Name or Location"
+        android:cursorVisible="true"
+        android:textCursorDrawable="@color/black"
+        android:textColorHint="@color/grey"
+        android:textColor="@color/black"
+        android:background="@drawable/border_solid_bg_transparent_rounded_selector"/>
+
+    <ListView
+        android:id="@+id/lvChurches"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/dim40"
+        android:paddingBottom="@dimen/dim10"
+        android:layout_below="@+id/etSearch"/>
+
+    <Button
+        android:id="@+id/btnProceed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_grad_red_selector"
+        android:text="Proceed"
+        android:textSize="@dimen/dimTex18"/>
+
+</RelativeLayout>

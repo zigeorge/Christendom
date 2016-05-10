@@ -1,0 +1,42 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/light_grey"
+    android:orientation="vertical"
+    tools:context="christian.network.fragment.HomeFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dim5"
+        android:background="@color/white"
+        android:padding="@dimen/dim15">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivProfileImage"
+            android:layout_width="@dimen/dim40"
+            android:layout_height="@dimen/dim40"
+            android:src="@drawable/profile_thumb"
+            app:civ_border_width="2dp"
+            app:civ_border_color="@color/white"/>
+
+        <TextView
+            android:id="@+id/tvWritePost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/ivProfileImage"
+            android:layout_marginLeft="@dimen/dim10"
+            android:background="@color/white"
+            android:textSize="@dimen/dimTex16"
+            android:hint="What's on your mind"
+            android:padding="@dimen/dim8" />
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvFeeds"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

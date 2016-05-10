@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dim10">
+
+    <ImageView
+        android:id="@+id/ivPoster"
+        android:layout_width="@dimen/dim50"
+        android:layout_height="@dimen/dim50"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/dim5"
+        android:src="@drawable/profile_thumb" />
+
+    <LinearLayout
+        android:id="@+id/llCommentsDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dim10"
+        android:layout_toRightOf="@+id/ivPoster"
+        android:layout_toLeftOf="@+id/ivEditComment"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvPosterName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dim5"
+            android:text="Prayer Hall"
+            android:textColor="@color/color_accent"
+            android:textSize="@dimen/dimTex20" />
+
+        <TextView
+            android:id="@+id/tvPost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimTex16"
+            android:text="@string/welcome_message_3" />
+
+        <TextView
+            android:id="@+id/tvPostTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dim10"
+            android:text="2 hours ago"
+            android:textColor="@color/grey_e8e" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/ivEditComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dim5"
+        android:layout_marginLeft="@dimen/dim5"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/dim20"
+        android:src="@drawable/ic_down" />
+
+    <ProgressBar
+        android:id="@+id/pbComments"
+        android:layout_width="@dimen/dim40"
+        android:layout_height="@dimen/dim40"
+        android:layout_marginLeft="@dimen/dim5"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/dim20"
+        android:progressDrawable="@color/color_primary"
+        android:visibility="gone"/>
+
+</RelativeLayout>

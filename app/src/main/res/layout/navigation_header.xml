@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="192dp"
+    android:background="?attr/colorPrimaryDark"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:fitsSystemWindows="true"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <RelativeLayout
+        android:id="@+id/rlNavHeaderContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivNavHeaderProfileImage"
+            android:layout_width="@dimen/dim70"
+            android:layout_height="@dimen/dim70"
+            android:src="@mipmap/ic_launcher"
+            app:civ_border_width="2dp"
+            app:civ_border_color="@color/white" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dim10"
+            android:layout_toRightOf="@+id/ivNavHeaderProfileImage"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvNavHeaderProfileName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mr. X"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimTex16" />
+
+            <TextView
+                android:id="@+id/tvNavHeaderChurchName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Christan Missionary"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimTex14" />
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</LinearLayout>

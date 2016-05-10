@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="christian.network">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/MainTheme">
+        <activity
+            android:name="christian.network.WelcomeActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="christian.network.SelectchurchActivity"
+            android:label="@string/title_activity_selectchurch"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="christian.network.FollowUsersActivity"
+            android:label="@string/title_activity_follow_pastore"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="christian.network.MainActivity"
+            android:label="@string/title_activity_main"
+            android:screenOrientation="portrait" />
+        <!-- Facebook Activity -->
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <activity
+            android:name="christian.network.SplashActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="christian.network.CreateFeedActivity"
+            android:label="@string/create_feed"
+            android:parentActivityName="christian.network.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="christian.network.CommentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="christian.network.ProfileActivity"
+            android:parentActivityName="christian.network.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="christian.network.EditProfileActivity"
+            android:label="@string/edit_profile"
+            android:screenOrientation="portrait"
+            android:parentActivityName="christian.network.ProfileActivity"/>
+    </application>
+
+</manifest>

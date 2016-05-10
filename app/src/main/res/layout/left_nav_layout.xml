@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/secondary_white"
+    android:elevation="@dimen/dim10"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent">
+
+            <Button
+                android:id="@+id/btnHome"
+                android:layout_width="@dimen/dim250"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/ic_home"
+                android:drawablePadding="5dp"
+                android:gravity="left|center_vertical"
+                android:text="Home"
+                android:textColor="@color/black"/>
+
+            <View
+                android:id="@+id/vHomeUnderline"
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginRight="@dimen/dim10"
+                android:layout_marginLeft="@dimen/dim10"
+                android:layout_below="@+id/btnHome"
+                android:background="@color/grey"/>
+
+            <Button
+                android:id="@+id/btnMessages"
+                android:layout_width="@dimen/dim250"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/vHomeUnderline"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/ic_message"
+                android:drawablePadding="5dp"
+                android:gravity="left|center_vertical"
+                android:text="Messages"
+                android:textColor="@color/black"/>
+
+            <View
+                android:id="@+id/vMsgUnderline"
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginRight="@dimen/dim10"
+                android:layout_marginLeft="@dimen/dim10"
+                android:layout_below="@+id/btnMessages"
+                android:background="@color/grey"/>
+
+            <Button
+                android:id="@+id/btnPrayerCompany"
+                android:layout_width="@dimen/dim250"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/vMsgUnderline"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/ic_companions"
+                android:drawablePadding="5dp"
+                android:gravity="left|center_vertical"
+                android:text="Prayer Companion"
+                android:textColor="@color/black"/>
+
+            <View
+                android:id="@+id/vCompanyUnderline"
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginRight="@dimen/dim10"
+                android:layout_marginLeft="@dimen/dim10"
+                android:layout_below="@+id/btnPrayerCompany"
+                android:background="@color/grey"/>
+
+            <Button
+                android:id="@+id/btnMyProfile"
+                android:layout_width="@dimen/dim250"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/vCompanyUnderline"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/ic_profile"
+                android:drawablePadding="5dp"
+                android:gravity="left|center_vertical"
+                android:text="My Profile"
+                android:textColor="@color/black"/>
+
+            <View
+                android:id="@+id/vProfile"
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginRight="@dimen/dim10"
+                android:layout_marginLeft="@dimen/dim10"
+                android:layout_below="@+id/btnMyProfile"
+                android:background="@color/grey"/>
+
+            <Button
+                android:id="@+id/btnSettings"
+                android:layout_width="@dimen/dim250"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/vProfile"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/ic_settings"
+                android:drawablePadding="5dp"
+                android:gravity="left|center_vertical"
+                android:text="Settings"
+                android:textColor="@color/black"/>
+
+            <View
+                android:id="@+id/vSettings"
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginRight="@dimen/dim10"
+                android:layout_marginLeft="@dimen/dim10"
+                android:layout_below="@+id/btnSettings"
+                android:background="@color/grey"/>
+
+            <View
+                android:id="@+id/vShare"
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginRight="@dimen/dim10"
+                android:layout_marginLeft="@dimen/dim10"
+                android:layout_above="@+id/btnShareFriends"
+                android:background="@color/grey"/>
+
+            <Button
+                android:id="@+id/btnShareFriends"
+                android:layout_width="@dimen/dim250"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/ic_share"
+                android:drawablePadding="5dp"
+                android:gravity="left|center_vertical"
+                android:text="Share With Your Friends"
+                android:textColor="@color/black"/>
+
+        </RelativeLayout>
+</LinearLayout>

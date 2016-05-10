@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:padding="@dimen/dim8">
+
+    <ImageView
+        android:id="@+id/ivChurchPp"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dim70"
+        android:layout_weight="2"
+        android:src="@mipmap/ic_launcher"/>
+
+    <LinearLayout
+        android:id="@+id/llChurchDetails"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="8"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dim20"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvChurchName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dim5"
+            android:text="Prayer Hall"
+            android:textColor="@color/color_accent"
+            android:textSize="@dimen/dimTex20"/>
+        <TextView
+            android:id="@+id/tvChurchDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:text="@string/welcome_message_3"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/ivEditComment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:scaleType="center"
+        android:src="@drawable/church_unfollow"/>
+
+</LinearLayout>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="christian.network.CommentActivity">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_above="@+id/llBottomLayout"
+        android:background="@color/grey_e8e" />
+
+    <LinearLayout
+        android:id="@+id/llBottomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:elevation="@dimen/dim5"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+        <EditText
+            android:id="@+id/etWriteComment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="9"
+            android:layout_marginLeft="@dimen/dim5"
+            android:background="@color/white"
+            android:cursorVisible="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:hint="Write Comment"
+            android:padding="@dimen/dim10"
+            android:textColor="@color/black"
+            android:textCursorDrawable="@color/black" />
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="@dimen/dim30"
+            android:background="@color/black" />
+
+        <ImageView
+            android:id="@+id/ivWrite"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_write_comment" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvLikeDetails"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim50"
+        android:elevation="@dimen/dim5"
+        android:gravity="center_vertical"
+        android:padding="@dimen/dim10"
+        android:text="10 peoples liked this"
+        android:textColor="@color/black" />
+
+    <ListView
+        android:id="@+id/lvComments"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/llBottomLayout"
+        android:layout_below="@+id/tvLikeDetails"
+        android:layout_marginBottom="@dimen/dim5"
+        android:layout_marginTop="@dimen/dim5" />
+
+</RelativeLayout>

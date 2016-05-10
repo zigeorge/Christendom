@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="christian.network.CreateFeedActivity">
+
+    <include
+        android:id="@+id/inc_topbar"
+        layout="@layout/appbar_feed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:id="@+id/rlEditFeed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/inc_topbar"
+        android:padding="@dimen/dim10"
+        android:elevation="@dimen/dim5">
+
+        <ImageView
+            android:id="@+id/ivProfileImage"
+            android:layout_width="@dimen/dim40"
+            android:layout_height="@dimen/dim40"
+            android:src="@drawable/profile_thumb" />
+
+        <EditText
+            android:id="@+id/etWritePost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dim10"
+            android:layout_toRightOf="@+id/ivProfileImage"
+            android:layout_toLeftOf="@+id/ivGetPhoto"
+            android:background="@color/white"
+            android:cursorVisible="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="top"
+            android:hint="What's on your mind?"
+            android:padding="@dimen/dim8"
+            android:textColor="@color/black"
+            android:textCursorDrawable="@color/black" />
+        <ImageView
+            android:id="@+id/ivGetPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_image_select" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlImageLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/llBottomButtons"
+        android:layout_below="@+id/rlEditFeed"
+        android:layout_marginBottom="@dimen/dim10"
+        android:layout_marginTop="@dimen/dim10"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/ivPostImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/dim15"
+            android:scaleType="fitStart"
+            android:src="@drawable/sample_image" />
+
+        <ImageView
+            android:id="@+id/ivDeleteImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_close_image" />
+
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_grey"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="christian.network.ProfileActivity">
+
+    <include
+        layout="@layout/appbar_feed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim300"
+                android:background="@color/white"
+                android:elevation="@dimen/dim5">
+
+                <ImageView
+                    android:id="@+id/ivChurchCp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dim250"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/sample_image" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dim250"
+                    android:background="@drawable/bg_gradient_transparent_black" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/civProfilePhoto"
+                    android:layout_width="@dimen/dim100"
+                    android:layout_height="@dimen/dim100"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/profile_thumb"
+                    app:civ_border_color="@color/white"
+                    app:civ_border_width="2dp" />
+
+                <LinearLayout
+                    android:id="@+id/llProfileContents"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/civProfilePhoto"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="@dimen/dim15"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvUserName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dim5"
+                        android:text="User Name"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dimTex25"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvChurchName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dim5"
+                        android:text="Church Name"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dimTex18" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/ivFollow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="@dimen/dim10"
+                    android:layout_marginRight="@dimen/dim20"
+                    android:src="@drawable/ic_profile_follow" />
+
+                <ImageView
+                    android:id="@+id/ivProfileSettings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/llProfileContents"
+                    android:layout_marginBottom="@dimen/dim10"
+                    android:layout_marginLeft="@dimen/dim30"
+                    android:src="@drawable/ic_wrench_sel" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dim10"
+                android:background="@color/white"
+                android:elevation="@dimen/dim5"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dim5"
+                android:paddingLeft="@dimen/dim10"
+                android:paddingRight="@dimen/dim10"
+                android:paddingTop="@dimen/dim10">
+
+                <TextView
+                    android:id="@+id/tvEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dim5"
+                    android:drawableLeft="@drawable/ic_profile_email"
+                    android:drawablePadding="@dimen/dim10"
+                    android:gravity="center_vertical"
+                    android:maxLines="2"
+                    android:text="This is the Church Name User Currently following"
+                    android:textColor="@color/grey_555" />
+
+                <TextView
+                    android:id="@+id/tvAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dim5"
+                    android:drawableLeft="@drawable/ic_profile_home"
+                    android:drawablePadding="@dimen/dim10"
+                    android:gravity="center_vertical"
+                    android:maxLines="2"
+                    android:text="Lives in Dhaka, Bangladesh"
+                    android:textColor="@color/grey_555" />
+
+                <TextView
+                    android:id="@+id/tvContactNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dim5"
+                    android:drawableLeft="@drawable/ic_profile_phone"
+                    android:drawablePadding="@dimen/dim10"
+                    android:gravity="center_vertical"
+                    android:text="+8801717588445"
+                    android:textColor="@color/grey_555" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvWriteStatusLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dim10"
+                android:paddingBottom="@dimen/dim5"
+                android:paddingTop="@dimen/dim5"
+                android:text="Write Status"
+                android:textSize="@dimen/dimTex12"
+                android:visibility="visible" />
+
+            <RelativeLayout
+                android:id="@+id/rlEditFeed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:elevation="@dimen/dim5"
+                android:padding="@dimen/dim10"
+                android:visibility="visible">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/civProfileImage"
+                    android:layout_width="@dimen/dim40"
+                    android:layout_height="@dimen/dim40"
+                    android:src="@drawable/profile_thumb"
+                    app:civ_border_color="@color/white"
+                    app:civ_border_width="2dp" />
+
+                <EditText
+                    android:id="@+id/etWritePost"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dim10"
+                    android:layout_marginRight="@dimen/dim10"
+                    android:layout_toLeftOf="@+id/ivGetPhoto"
+                    android:layout_toRightOf="@+id/civProfileImage"
+                    android:background="@color/white"
+                    android:cursorVisible="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:gravity="top"
+                    android:hint="What's on your mind?"
+                    android:padding="@dimen/dim8"
+                    android:textColor="@color/black"
+                    android:textCursorDrawable="@color/black" />
+
+                <ImageView
+                    android:id="@+id/ivGetPhoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_image_select" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlProgressLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="@dimen/dim50"
+                    android:layout_height="@dimen/dim50"
+                    android:layout_centerInParent="true" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dim10"
+                android:layout_marginTop="@dimen/dim5"
+                android:paddingBottom="@dimen/dim5"
+                android:paddingTop="@dimen/dim5"
+                android:text="Posts"
+                android:textSize="@dimen/dimTex12" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvUserFeeds"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

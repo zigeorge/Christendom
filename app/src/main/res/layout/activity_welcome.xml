@@ -1,0 +1,87 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    tools:context="christian.network.WelcomeActivity">
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPagerWelcome"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <me.relex.circleindicator.CircleIndicator
+        android:id="@+id/indicatorWelcome"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_above="@+id/llBottomButtons"
+        android:layout_marginBottom="@dimen/dim10"
+        app:ci_drawable="@drawable/red_radius"
+        app:ci_drawable_unselected="@drawable/grey_radius"
+        app:ci_height="4dp"
+        app:ci_margin="6dp"
+        app:ci_width="10dp" />
+
+
+    <RelativeLayout
+        android:id="@+id/rlProgress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/llBottomButtons">
+
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="@dimen/dim50"
+            android:layout_height="@dimen/dim50"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/llBottomButtons"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim50"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dim10"
+        android:layout_marginLeft="@dimen/dim10"
+        android:layout_marginRight="@dimen/dim10"
+        android:orientation="horizontal">
+
+        <!--<com.google.android.gms.common.SignInButton
+            android:id="@+id/btnGoogle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />-->
+
+        <TextView
+            android:id="@+id/tvGoogle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/dim5"
+            android:layout_weight="1"
+            android:background="@drawable/bg_google"
+            android:elevation="@dimen/dim10"
+            android:gravity="center"
+            android:text="Google +"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimTex16" />
+
+        <TextView
+            android:id="@+id/tvFacebook"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/dim5"
+            android:layout_weight="1"
+            android:background="@drawable/bg_facebook"
+            android:elevation="@dimen/dim10"
+            android:gravity="center"
+            android:text="Facebook"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimTex16" />
+
+    </LinearLayout>
+
+</RelativeLayout>

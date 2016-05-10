@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="christian.network.EditProfileActivity">
+
+    <include
+        layout="@layout/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/dim10"
+        android:weightSum="8"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2">
+            <ImageView
+                android:id="@+id/ivProfilePhoto"
+                android:layout_width="@dimen/dim120"
+                android:layout_height="@dimen/dim120"
+                android:layout_centerVertical="true"
+                android:src="@drawable/profile_thumb"/>
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <christian.network.customcontrol.FloatingHintEditText
+                android:id="@+id/fhetFirstName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:inputType="text"
+                android:ems="10"
+                android:textColorHint="@color/grey_555"
+                android:textColor="@color/black"
+                android:hint="Fisrt Name" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <christian.network.customcontrol.FloatingHintEditText
+                android:id="@+id/fhetLastName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:singleLine="true"
+                android:inputType="text"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey_555"
+                android:hint="Last Name" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <christian.network.customcontrol.FloatingHintEditText
+                android:id="@+id/fhetAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:inputType="text"
+                android:textColor="@color/black"
+                android:ems="10"
+                android:textColorHint="@color/grey_555"
+                android:hint="Address" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <christian.network.customcontrol.FloatingHintEditText
+                android:id="@+id/fhetContactNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:textColor="@color/black"
+                android:ems="10"
+                android:textColorHint="@color/grey_555"
+                android:hint="Contact No" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnSubmit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/color_primary"
+                android:text="Save Changes"
+                android:padding="@dimen/dim10"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

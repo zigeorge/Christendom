@@ -1,0 +1,78 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <!-- Main theme colors -->
+        <!--   your app branding color for the app bar -->
+        <item name="colorPrimary">@color/color_primary</item>
+        <!--   darker variant for the status bar and contextual app bars -->
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <!--   theme UI controls like checkboxes and text fields -->
+        <item name="colorAccent">@color/white</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:windowBackground">@color/white</item>
+        <!--<item name="android:navigationBarColor">@color/color_primary_light</item>-->
+    </style>
+
+    <style name="MainTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <!--We will be using the toolbar so no need to show ActionBar-->
+        <item name="android:windowActionBar">false</item>
+        <!-- Set theme colors from http://www.google.com/design/spec/style/color.html#color-color-palette-->
+        <!-- colorPrimary is used for the default action bar background -->
+        <item name="colorPrimary">@color/color_primary</item>
+        <!--   darker variant for the status bar and contextual app bars -->
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
+        <!--   theme UI controls like checkboxes and text fields -->
+        <item name="colorAccent">@color/white</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:windowBackground">@color/white</item>
+        <!--<item name="android:navigationBarColor">@color/black</item>-->
+        <item name="android:alertDialogTheme">@style/myAlertDialog</item>
+        <item name="floatingHintEditTextStyle">@style/Widget.FloatingHintEditText</item>
+        <!-- You can also set colorControlNormal, colorControlActivated
+           colorControlHighlight and colorSwitchThumbNormal. -->
+    </style>
+
+    <style name="Widget.FloatingHintEditText" parent="@android:style/Widget.EditText">
+        <item name="android:paddingTop">0dp</item>
+    </style>
+
+    <style name="myAlertDialog">
+        <item name="android:windowBackground">@drawable/dialog_shape</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>
+        <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:textColorSecondary">@color/black</item>
+        <item name="android:textColor">@color/black</item>
+        <!--<item name="android:buttonBarNegativeButtonStyle">@style/negativeButtonStyle</item>-->
+        <!--<item name="android:buttonBarPositiveButtonStyle">@style/positiveButtonStyle</item>-->
+        <!--<item name="android:windowTitleStyle"></item>
+        <item name="android:textAppearanceMedium">...</item>
+        <item name="android:borderlessButtonStyle">...</item>
+        <item name="android:buttonBarStyle">...</item>-->
+    </style>
+
+    <style name="negativeButtonStyle">
+        <item name="android:textColor">@color/color_primary</item>
+        <item name="android:background">@color/transparent</item>
+    </style>
+
+    <style name="positiveButtonStyle">
+        <item name="android:textColor">@color/positive_blue</item>
+        <item name="android:background">@color/transparent</item>
+    </style>
+
+    <style name="MainTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="MainTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="PagerTabStripText">
+        <item name="android:textSize">@dimen/dimTex18</item>
+    </style>
+
+</resources>
