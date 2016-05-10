@@ -1,1 +1,7 @@
 /build
+app-release.apk
+app.iml
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
