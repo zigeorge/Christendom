@@ -264,6 +264,10 @@ public class Feed implements Parcelable {
         return StaticData.IMG_BASE_URL+image;
     }
 
+    public String getProfileImage(String id){
+        return StaticData.FACEBOOK_IMAGE_URL+id+StaticData.FACEBOOK_IMAGE_SIZE;
+    }
+
     public String getAddress() {
         return address;
     }

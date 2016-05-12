@@ -145,7 +145,7 @@ public class WelcomeActivity extends AppCompatActivity implements GoogleApiClien
 //                startActivity(new Intent(context, SignupActivity.class));
                 if (ApplicationUtility.checkInternet(context)) {
 //                    loginByGoogle();
-                    Toast.makeText(context,"Coming Soon!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Coming Soon!", Toast.LENGTH_SHORT).show();
                 } else {
                     ApplicationUtility.openNetworkDialog(WelcomeActivity.this);
                 }
@@ -262,7 +262,7 @@ public class WelcomeActivity extends AppCompatActivity implements GoogleApiClien
 
         @Override
         public void onFailure(Throwable t) {
-            Toast.makeText(context,"Problem connecting server. Try again",Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Problem connecting server. Try again", Toast.LENGTH_SHORT).show();
             rlProgress.setVisibility(View.GONE);
         }
     };
@@ -310,20 +310,11 @@ public class WelcomeActivity extends AppCompatActivity implements GoogleApiClien
             //Save User information
             saveUserSession(response.getUser());
             //Go to Feeds Page
-            if (isFirstTime) {
-                editor.putBoolean(StaticData.FIRST_TIME, false);
-                editor.commit();
-                Intent mIntent = new Intent(context, FollowUsersActivity.class);
+            editor.commit();
+            Intent mIntent = new Intent(context, MainActivity.class);
 //                mIntent.putExtra(StaticData.USER_DATA, responseBundle);
-                startActivity(mIntent);
-                finish();
-            } else {
-                editor.commit();
-                Intent mIntent = new Intent(context, MainActivity.class);
-//                mIntent.putExtra(StaticData.USER_DATA, responseBundle);
-                startActivity(mIntent);
-                finish();
-            }
+            startActivity(mIntent);
+            finish();
         } else {
             Toast.makeText(context, "Try Again.. It seems we cannot autenticate your account from server", Toast.LENGTH_LONG).show();
         }
@@ -338,7 +329,7 @@ public class WelcomeActivity extends AppCompatActivity implements GoogleApiClien
         editor.putString(StaticData.USER_EMAIL, user.getEmail());
         editor.putString(StaticData.USER_CONTACT, user.getContact_no());
         editor.putString(StaticData.USER_IMAGE, user.getImage());
-        editor.putString(StaticData.USER_ADDRESS,user.getAddress());
+        editor.putString(StaticData.USER_ADDRESS, user.getAddress());
         editor.putString(StaticData.TYPE, user.getType());
         editor.putBoolean(StaticData.SESSION, true);
         editor.putBoolean(StaticData.FIRST_TIME, false);

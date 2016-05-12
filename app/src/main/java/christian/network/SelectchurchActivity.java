@@ -3,6 +3,7 @@ package christian.network;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import christian.network.fragment.ChurchDialogFragment;
 import christian.network.interfaces.APIServiceInterface;
 import christian.network.adapters.ChurchListAdapter;
 import christian.network.entity.Church;
@@ -31,7 +33,7 @@ import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
 
-public class SelectchurchActivity extends AppCompatActivity implements ChurchListAdapter.OnFollowChangedListener {
+public class SelectchurchActivity extends AppCompatActivity implements ChurchListAdapter.OnFollowChangedListener, ChurchListAdapter.OnChurchDetailsPressedListener, ChurchDialogFragment.OnChurchFollowedListener {
 
     EditText etSearch;
     ListView lvChurches;
@@ -214,5 +216,19 @@ public class SelectchurchActivity extends AppCompatActivity implements ChurchLis
     public void onFollowChanged(Church church, boolean hasFollowed) {
         followedChurch = church;
         this.hasFollowed = hasFollowed;
+    }
+
+    @Override
+    public void onChurchDetailsPressed(Church church) {
+        FragmentManager fm = getSupportFragmentManager();
+        ChurchDialogFragment churchDialogFragment = ChurchDialogFragment.newInstance(church);
+        churchDialogFragment.show(fm, "fragment_edit_name");
+    }
+
+    @Override
+    public void onChurchFollowed(Church church) {
+        followedChurch = church;
+        hasFollowed = true;
+        followChurchAndProceed();
     }
 }

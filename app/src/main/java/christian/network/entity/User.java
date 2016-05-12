@@ -162,6 +162,10 @@ public class User implements Parcelable {
         return StaticData.IMG_BASE_URL + image;
     }
 
+    public String getProfileImage(String userId){
+        return StaticData.FACEBOOK_IMAGE_URL+userId+StaticData.FACEBOOK_IMAGE_SIZE;
+    }
+
     public void setImage(String image) {
         this.image = image;
     }

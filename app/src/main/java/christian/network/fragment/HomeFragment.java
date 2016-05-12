@@ -114,7 +114,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void setProfileImage() {
-        String img_url = getActivity().getSharedPreferences(StaticData.APP_PREFERENCE, Context.MODE_PRIVATE).getString(StaticData.USER_IMAGE, "");
+//        String img_url = getActivity().getSharedPreferences(StaticData.APP_PREFERENCE, Context.MODE_PRIVATE).getString(StaticData.USER_IMAGE, "");
+        String img_url = StaticData.FACEBOOK_IMAGE_URL+user_id+StaticData.FACEBOOK_IMAGE_SIZE;
         Picasso.with(context).load(img_url).error(R.drawable.profile_thumb).placeholder(R.drawable.profile_thumb).into(ivProfileImage);
     }
 

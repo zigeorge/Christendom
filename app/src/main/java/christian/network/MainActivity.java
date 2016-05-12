@@ -62,10 +62,10 @@ public class MainActivity extends AppCompatActivity implements FeedsAdapter.OnCo
         initUI();
         initActionBar();
         initDrawer();
-        setDrawerHeaderContent();
         initFragmentManager();
         setUserNChurchId();
         setupDrawerContent();
+        setDrawerHeaderContent();
         addFabActions();
         disableFabLayer();
         Log.e("Christendom", "On Create");
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements FeedsAdapter.OnCo
 
     private void setDrawerHeaderContent() {
         SharedPreferences sharedPreferences = getSharedPreferences(StaticData.APP_PREFERENCE, Context.MODE_PRIVATE);
-        String image = sharedPreferences.getString(StaticData.USER_IMAGE, "");
+        String image = StaticData.FACEBOOK_IMAGE_URL + user_id + StaticData.FACEBOOK_IMAGE_SIZE;
         String name = sharedPreferences.getString(StaticData.USER_FIRST_NAME, "") + " " + sharedPreferences.getString(StaticData.USER_LAST_NAME, "");
         String church_name = sharedPreferences.getString(StaticData.CHURCH_NAME, "");
         Picasso.with(context).load(image).placeholder(R.drawable.profile_thumb).error(R.drawable.profile_thumb).into(civNavHeaderImage);
@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements FeedsAdapter.OnCo
         pIntent.putExtra(StaticData.USER_ID, user_id);
         pIntent.putExtra(StaticData.USER_FULL_NAME, tvHeaderProfileName.getText());
         pIntent.putExtra(StaticData.USER_IS_FOLLOWED, false);
-        pIntent.putExtra(StaticData.USER_PROFILE,true);
+        pIntent.putExtra(StaticData.USER_PROFILE, true);
         startActivity(pIntent);
     }
 

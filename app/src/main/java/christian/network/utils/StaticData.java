@@ -37,12 +37,13 @@ public class StaticData {
     public static final String USER_PROFILE = "my_profile";
 
     public static final String USER = "user";
+    public static final String CHURCH = "church";
 
 //    public static final String USER_DATA = "user_data";
 
     public static final String FACEBOOK_ACCESSTOKEN_URL = "https://graph.facebook.com/me?access_token=";
     public static final String FACEBOOK_IMAGE_URL = "https://graph.facebook.com/";   //1124201710943987
-    public static final String FACEBOOK_IMAGE_SIZE = "/picture?width=80&height=80";
+    public static final String FACEBOOK_IMAGE_SIZE = "/picture?width=150&height=150";
     public static final String ACCESSTOKEN_URL = "accesstoken_url";
 
     public static final String BASE_URL = "http://christendom.co/api/member/v1/";

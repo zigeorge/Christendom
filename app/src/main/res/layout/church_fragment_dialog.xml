@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/rlTopLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim250">
+
+        <ImageView
+            android:id="@+id/ivChurchCoverImage"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim200"
+            android:scaleType="centerCrop" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim200"
+            android:background="@color/transparent_black"/>
+
+        <ImageView
+            android:id="@+id/ivChurchProfileImage"
+            android:layout_width="@dimen/dim100"
+            android:layout_height="@dimen/dim100"
+            android:layout_marginLeft="@dimen/dim20"
+            android:layout_alignParentBottom="true" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tvChurchName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rlTopLayout"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:freezesText="true"
+        android:layout_margin="@dimen/dim10"
+        android:text="Christ Love Convenant"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dimTex25"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvChurchDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvChurchName"
+        android:layout_marginLeft="@dimen/dim10"
+        android:layout_marginRight="@dimen/dim10"
+        android:layout_marginBottom="@dimen/dim20"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dimTex16"
+        android:text="@string/dummy_text"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_above="@+id/llButtonView"
+        android:layout_marginTop="@dimen/dim10"
+        android:background="@color/grey_e8e"/>
+
+    <LinearLayout
+        android:id="@+id/llButtonView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvChurchDescription"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tvClose"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dim50"
+            android:layout_weight="1"
+            android:textSize="@dimen/dimTex20"
+            android:gravity="center"
+            android:text="Close"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
+        <View
+            android:layout_width="1px"
+            android:layout_height="@dimen/dim50"
+            android:background="@color/grey_e8e"/>
+
+        <TextView
+            android:id="@+id/tvFollowChurch"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dim50"
+            android:layout_weight="1"
+            android:background="@drawable/follow_text_color_selector"
+            android:textSize="@dimen/dimTex20"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="Follow"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

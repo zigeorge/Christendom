@@ -1,11 +1,14 @@
 package christian.network.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import christian.network.utils.StaticData;
 
 /**
  * Created by User on 07-Apr-16.
  */
-public class Church {
+public class Church implements Parcelable {
 
     private String church_id;
     private String church_name;
@@ -13,6 +16,27 @@ public class Church {
     private String image_pp;
     private String image_cover;
     private boolean isFollowed;
+
+    protected Church(Parcel in) {
+        church_id = in.readString();
+        church_name = in.readString();
+        description = in.readString();
+        image_pp = in.readString();
+        image_cover = in.readString();
+        isFollowed = in.readByte() != 0;
+    }
+
+    public static final Creator<Church> CREATOR = new Creator<Church>() {
+        @Override
+        public Church createFromParcel(Parcel in) {
+            return new Church(in);
+        }
+
+        @Override
+        public Church[] newArray(int size) {
+            return new Church[size];
+        }
+    };
 
     public String getImage_pp() {
         return StaticData.IMG_BASE_URL + image_pp;
@@ -60,5 +84,20 @@ public class Church {
 
     public void setIsFollowed(boolean isFollowed) {
         this.isFollowed = isFollowed;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(church_id);
+        dest.writeString(church_name);
+        dest.writeString(description);
+        dest.writeString(image_pp);
+        dest.writeString(image_cover);
+        dest.writeByte((byte) (isFollowed ? 1 : 0));
     }
 }

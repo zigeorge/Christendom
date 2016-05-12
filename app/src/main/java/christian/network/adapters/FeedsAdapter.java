@@ -81,10 +81,10 @@ public class FeedsAdapter extends RecyclerView.Adapter<FeedsAdapter.FeedViewHold
     public void onBindViewHolder(final FeedViewHolder holder, final int position) {
         final Feed feed = feeds.get(position);
 //        Log.e("Name", feed.getFirst_name() + " " + feed.getLast_name());
-        Picasso.with(context).load(feed.getImage()).placeholder(R.drawable.profile_thumb).into(holder.civUserImage);
+        Picasso.with(context).load(feed.getProfileImage(feed.getPoster_id())).placeholder(R.drawable.profile_thumb).into(holder.civUserImage);
         if(!TextUtils.isEmpty(feed.getPost_image())){
             holder.ivPostedImage.setVisibility(View.VISIBLE);
-            Picasso.with(context).load(feed.getPost_image()).into(holder.ivPostedImage);
+            Picasso.with(context).load(feed.getPost_image()).placeholder(R.drawable.progress_loading).into(holder.ivPostedImage); // Add error image here
         }else{
             holder.ivPostedImage.setVisibility(View.GONE);
         }
@@ -164,6 +164,13 @@ public class FeedsAdapter extends RecyclerView.Adapter<FeedsAdapter.FeedViewHold
                     isDeleteEnabled = false;
                     notifyDataSetChanged();
                 }
+            }
+        });
+
+        holder.ivPostedImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ApplicationUtility.openScreenshotDialog(feed.getPost_image(), context);
             }
         });
 

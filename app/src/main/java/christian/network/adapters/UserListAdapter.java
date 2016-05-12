@@ -103,7 +103,7 @@ public class UserListAdapter extends ArrayAdapter<User> {
     private void setDataInRow(int position, ViewHolder holder) {
         User user = users.get(position);
         holder.tvUserName.setText(user.getFirst_name() + " " + user.getLast_name());
-        Picasso.with(context).load(user.getImage()).placeholder(R.drawable.profile_thumb).error(R.drawable.profile_thumb).resize(55, 55).into(holder.ivUserPhoto);
+        Picasso.with(context).load(user.getProfileImage(user.getUser_id())).placeholder(R.drawable.profile_thumb).error(R.drawable.profile_thumb).resize(80, 80).centerCrop().into(holder.ivUserPhoto);
         if (user.isFollowed()) {
             holder.ivFollow.setImageResource(R.drawable.ic_unfollow_selector);
         } else {

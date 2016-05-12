@@ -266,9 +266,9 @@ public class ProfileActivity extends AppCompatActivity implements FeedsAdapter.O
         checkTextTakeAction(user.getContact_no(), tvContactNo);
         checkTextTakeAction(user.getAddress(), tvAddress);
         Log.e("IMAGE_CP", user.getImage_cover());
-        Log.e("IMAGE_CP", user.getImage());
-        Picasso.with(context).load(user.getImage()).error(R.drawable.profile_thumb).placeholder(R.drawable.profile_thumb).into(civProfileImage);
-        Picasso.with(context).load(user.getImage()).error(R.drawable.profile_thumb).placeholder(R.drawable.profile_thumb).into(civProfilePhoto);
+        Log.e("IMAGE_PP", user.getImage());
+        Picasso.with(context).load(user.getProfileImage(user.getUser_id())).error(R.drawable.profile_thumb).placeholder(R.drawable.profile_thumb).into(civProfileImage);
+        Picasso.with(context).load(user.getProfileImage(user.getUser_id())).error(R.drawable.profile_thumb).placeholder(R.drawable.profile_thumb).into(civProfilePhoto);
         Picasso.with(context).load(user.getImage_cover()).into(ivChurchCp);
         if (is_followed) {
             setFollowing();

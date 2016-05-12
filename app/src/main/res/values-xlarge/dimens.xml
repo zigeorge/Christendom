@@ -19,6 +19,7 @@
     <dimen name="dim100">200dp</dimen>
     <dimen name="dim120">240dp</dimen>
     <dimen name="dim150">300dp</dimen>
+    <dimen name="dim200">400dp</dimen>
     <dimen name="dim250">440dp</dimen>
     <dimen name="listWidth">480dp</dimen>
     <dimen name="dim300">600dp</dimen>

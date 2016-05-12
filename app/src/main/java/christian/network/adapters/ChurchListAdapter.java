@@ -1,6 +1,7 @@
 package christian.network.adapters;
 
 import android.content.Context;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import java.util.List;
 
 import christian.network.R;
 import christian.network.entity.Church;
+import christian.network.fragment.ChurchDialogFragment;
 
 /**
  * Created by User on 10-Apr-16.
@@ -31,6 +33,7 @@ public class ChurchListAdapter extends ArrayAdapter<Church> {
     ChurchFilter churchFilter;
 
     OnFollowChangedListener onFollowChangedListener;
+    OnChurchDetailsPressedListener onChurchDetailsPressedListener;
 
     public ChurchListAdapter(Context context, int resource, ArrayList<Church> churches, String user_id) {
         super(context, resource, churches);
@@ -42,6 +45,8 @@ public class ChurchListAdapter extends ArrayAdapter<Church> {
 
         try {
             onFollowChangedListener = (OnFollowChangedListener) context;
+            onChurchDetailsPressedListener = (OnChurchDetailsPressedListener) context;
+
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
                     + " must implement OnFollowChangedListener");
@@ -63,7 +68,7 @@ public class ChurchListAdapter extends ArrayAdapter<Church> {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.church_row, null);
+            convertView = inflater.inflate(resId, null);
             holder = new ViewHolder();
             holder.ivChurchPp = (ImageView) convertView.findViewById(R.id.ivChurchPp);
             holder.tvChurchDesc = (TextView) convertView.findViewById(R.id.tvChurchDesc);
@@ -102,6 +107,8 @@ public class ChurchListAdapter extends ArrayAdapter<Church> {
             @Override
             public void onClick(View v) {
                 //Open Church Details on dialogue
+                Church aChurch=churches.get(position);
+                onChurchDetailsPressedListener.onChurchDetailsPressed(aChurch);
             }
         });
 
@@ -121,6 +128,7 @@ public class ChurchListAdapter extends ArrayAdapter<Church> {
         } else {
             holder.ivFollow.setImageResource(R.drawable.church_follow);
         }
+        Log.e("Profile Picture",church.getImage_pp());
         Picasso.with(context).load(church.getImage_pp()).placeholder(R.drawable.profile_thumb).into(holder.ivChurchPp);
     }
 
@@ -138,6 +146,10 @@ public class ChurchListAdapter extends ArrayAdapter<Church> {
 
     public interface OnFollowChangedListener {
         public void onFollowChanged(Church church, boolean hasFollowed);
+    }
+
+    public interface OnChurchDetailsPressedListener{
+        public void onChurchDetailsPressed(Church church);
     }
 
     private class ChurchFilter extends Filter{

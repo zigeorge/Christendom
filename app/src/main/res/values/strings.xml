@@ -45,4 +45,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="google_server_client_id">419938411552-qk236b234ob8rvbbdr2ntga7lppkq9m1.apps.googleusercontent.com</string>
     <string name="title_activity_splash">SplashActivity</string>
+
+    <string name="dummy_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut tempor nulla ligula, vitae tincidunt augue efficitur vel. Morbi risus mi, gravida vitae molestie et, tincidunt at nulla. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</string>
 </resources>

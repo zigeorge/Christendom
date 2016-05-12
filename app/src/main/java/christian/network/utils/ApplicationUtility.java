@@ -2,6 +2,7 @@ package christian.network.utils;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,8 +13,10 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 
 import com.facebook.AccessToken;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import christian.network.R;
+import christian.network.customcontrol.TouchImageView;
 import christian.network.entity.User;
 import christian.network.responses.SignUpResponse;
 
@@ -41,7 +45,7 @@ public class ApplicationUtility {
             String accesstokenUrl = StaticData.FACEBOOK_ACCESSTOKEN_URL + accessToken.getToken() + "&format=json";
             Log.e(StaticData.ACCESSTOKEN_URL, accesstokenUrl);
             try {
-                URL profile_pic = new URL("https://graph.facebook.com/" + id + "/picture?width=400&height=400");
+                URL profile_pic = new URL("https://graph.facebook.com/" + id + "/picture?width=200&height=200");
                 Log.e("profile_pic", profile_pic + "");
                 bundle.putString(StaticData.USER_IMAGE, profile_pic.toString());
 
@@ -142,6 +146,25 @@ public class ApplicationUtility {
             InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+
+    public static void openScreenshotDialog(String imgUrl, Context con) {
+        final Dialog dialog = new Dialog(con, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+        dialog.setContentView(R.layout.screenshot_dialog);
+
+        TouchImageView image = (TouchImageView) dialog.findViewById(R.id.ivScreenshot);
+        Picasso.with(con).load(imgUrl).placeholder(R.drawable.progress_loading).into(image);
+
+        ImageView ivCross = (ImageView) dialog.findViewById(R.id.ivCross);
+        // if button is clicked, close the custom dialog
+        ivCross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
 }
