@@ -38,8 +38,9 @@ public interface APIServiceInterface {
     @GET("feeds.php")
     Call<AllFeedsResponse> getAllFeed(@Query("JSONParam") String jSonParam, @Query("authtoken") String authToken);
 
+    @FormUrlEncoded
     @POST("feeds.php")
-    Call<CommonResponse> postUserFeed(@Query("JSONParam") String jSonParam, @Query("authtoken") String authToken);
+    Call<CommonResponse> postUserFeed(@Query("JSONParam") String jSonParam, @Query("authtoken") String authToken, @Field("image") String image);
 
     @DELETE("feeds.php")
     Call<CommonResponse> deleteUserFeed(@Query("JSONParam") String jSonParam, @Query("authtoken") String authToken);

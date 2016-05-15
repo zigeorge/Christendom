@@ -1,19 +1,29 @@
 package christian.network.utils;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.squareup.picasso.Picasso;
@@ -21,6 +31,7 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.ParseException;
@@ -87,6 +98,7 @@ public class ApplicationUtility {
     public static Bundle getResponseBundle(SignUpResponse response) {
         Bundle bundle = new Bundle();
         User aUser = response.getUser();
+        Log.e("User_Id", aUser.getUser_id());
         bundle.putString(StaticData.USER_ID, aUser.getUser_id());
         bundle.putString(StaticData.USER_FIRST_NAME, aUser.getFirst_name());
         bundle.putString(StaticData.USER_LAST_NAME, aUser.getLast_name());
@@ -165,6 +177,83 @@ public class ApplicationUtility {
         });
 
         dialog.show();
+    }
+
+    public static String getPath(Uri uri, Activity activity) {
+
+        if (uri == null) {
+            return null;
+        }
+
+        // this will only work for images selected from gallery
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = activity.managedQuery(uri, projection, null, null, null);
+        if (cursor != null) {
+            int column_index = cursor
+                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        }
+
+        return uri.getPath();
+    }
+
+    public static String getImageInBase64(Bitmap pic){
+        String resultStr = "";
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        pic = Bitmap.createScaledBitmap(pic, 300, 300, true);
+
+        // byte array output streams
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        pic.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+
+        // byte array
+        byte[] ba = baos.toByteArray();
+
+        // byte to base64 encoded string
+        resultStr = Base64.encodeBytes(ba);
+        Log.e("Bas64 Image Test",resultStr);
+        return resultStr;
+    }
+
+    public static boolean checkPermissions(Context context) {
+        int resultWritePermission = ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int resultReadPermission = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE);
+        int resultCameraPermission = ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA);
+        if (resultWritePermission == PackageManager.PERMISSION_GRANTED && resultCameraPermission == PackageManager.PERMISSION_GRANTED
+                && resultReadPermission == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static void requestPermission(Activity activity) {
+        /**
+         * Previous denials will warrant a rationale for the user to help convince them.
+         */
+        if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                && ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.CAMERA)
+                && ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            Toast.makeText(activity, "Christendom needs to access your external storage and camera to show images to select.", Toast.LENGTH_LONG).show();
+        } else {
+            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, StaticData.PERMISSION_REQUEST_CODE);
+        }
+    }
+
+    public static void getImageFromDevice(Activity activity) {
+        Intent intentt = new Intent(
+                Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    /*
+                     * intentt.setType("image/*");
+					 * intentt.setAction(Intent.ACTION_GET_CONTENT);
+					 */
+        activity.startActivityForResult(
+                Intent.createChooser(intentt, "Select Picture"),
+                StaticData.SELECT_PICTURE);
     }
 
 }

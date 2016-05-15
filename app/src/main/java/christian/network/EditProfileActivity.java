@@ -103,8 +103,13 @@ public class EditProfileActivity extends AppCompatActivity {
         checkAndSet(user.getLast_name(), fhetLastName);
         checkAndSet(user.getAddress(), fhetAddress);
         checkAndSet(user.getContact_no(), fhetContactNo);
-        Picasso.with(context).load(user.getImage()).placeholder(R.drawable.profile_thumb)
+        Picasso.with(context).load(getImage()).placeholder(R.drawable.profile_thumb)
                 .error(R.drawable.profile_thumb).into(ivProfilePhoto);
+    }
+
+    private String getImage(){
+        String imgUrl = StaticData.FACEBOOK_IMAGE_URL + user.getUser_id() + StaticData.FACEBOOK_IMAGE_SIZE;
+        return imgUrl;
     }
 
     private void checkAndSet(String text, FloatingHintEditText floatingHintEditText) {

@@ -28,6 +28,7 @@ public class StaticData {
     public static final String DESCRIPTION = "description";
     public static final String POST = "post";
     public static final String IMG_URL = "image_url";
+    public static final String IMAGE = "image";
     public static final String POST_ID = "post_id";
     public static final String NO_OF_LIKES = "no_of_likes";
     public static final String COMMENT_ID = "comment_id";
@@ -48,11 +49,14 @@ public class StaticData {
 
     public static final String BASE_URL = "http://christendom.co/api/member/v1/";
     public static final String IMG_BASE_URL = "http://christendom.co/";
-    public static final String IMG_POSST_EXTNSN = "/img/posts/";
+    public static final String IMG_POST_EXTNSN = "img/posts/";
     public static final String AUTH_TOKEN = "24b51414e5567312de5271f05d07a33a8c032e0e";
 
     public static final String APP_PREFERENCE = "app_preference";
     public static final String FIRST_TIME = "first_time";
     public static final String SESSION = "session";
+
+    public static final int SELECT_PICTURE = 007;
+    public static final int PERMISSION_REQUEST_CODE = 1;
 
 }

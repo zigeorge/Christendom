@@ -25,14 +25,14 @@
                 android:id="@+id/ivProfilePhoto"
                 android:layout_width="@dimen/dim120"
                 android:layout_height="@dimen/dim120"
-                android:layout_centerVertical="true"
+                android:layout_centerInParent="true"
                 android:src="@drawable/profile_thumb"/>
         </RelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <christian.network.customcontrol.FloatingHintEditText
@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <christian.network.customcontrol.FloatingHintEditText
@@ -70,7 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <christian.network.customcontrol.FloatingHintEditText
@@ -89,7 +89,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <christian.network.customcontrol.FloatingHintEditText

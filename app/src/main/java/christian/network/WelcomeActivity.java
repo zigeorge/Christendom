@@ -255,9 +255,13 @@ public class WelcomeActivity extends AppCompatActivity implements GoogleApiClien
     Callback<SignUpResponse> signUpResponseCallback = new Callback<SignUpResponse>() {
         @Override
         public void onResponse(Response<SignUpResponse> response, Retrofit retrofit) {
-            Log.e("RESPONSE", response.toString());
-            processSignIn(response.body());
-            rlProgress.setVisibility(View.GONE);
+            if(response.body().isSuccess()) {
+                Log.e("RESPONSE", response.body().getMessage());
+                processSignIn(response.body());
+                rlProgress.setVisibility(View.GONE);
+            }else{
+                Log.e("RESPONSE", response.body().getMessage());
+            }
         }
 
         @Override
@@ -296,6 +300,7 @@ public class WelcomeActivity extends AppCompatActivity implements GoogleApiClien
     }
 
     private void processSignIn(SignUpResponse response) {
+        Log.e("USER_ID",response.getUser().getUser_id());
         Bundle responseBundle = ApplicationUtility.getResponseBundle(response);
         if (response.isSuccess() && response.getUser().getChurch_id().equalsIgnoreCase("0")) {
             //Save User information

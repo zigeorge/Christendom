@@ -182,8 +182,8 @@
                     app:civ_border_color="@color/white"
                     app:civ_border_width="2dp" />
 
-                <EditText
-                    android:id="@+id/etWritePost"
+                <TextView
+                    android:id="@+id/tvWritePost"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dim10"
@@ -195,6 +195,7 @@
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:gravity="top"
+                    android:textSize="@dimen/dimTex18"
                     android:hint="What's on your mind?"
                     android:padding="@dimen/dim8"
                     android:textColor="@color/black"
@@ -206,6 +207,14 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:src="@drawable/ic_image_select" />
+                <!--<RelativeLayout
+                    android:id="@+id/rlImageLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dim10"
+                    android:layout_below="@+id/civProfileImage">
+
+                </RelativeLayout>-->
             </RelativeLayout>
 
             <RelativeLayout

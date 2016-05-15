@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -45,7 +46,8 @@ public class ProfileActivity extends AppCompatActivity implements FeedsAdapter.O
     ImageView ivChurchCp, ivGetPhoto, ivPost, ivFollow, ivProfileSettings;
     CircleImageView civProfilePhoto, civProfileImage;
     TextView tvUserName, tvChurchName, tvEmail, tvAddress, tvContactNo, tvWriteStatusLabel;
-    EditText etWritePost;
+//    EditText etWritePost;
+    TextView tvWritePost;
     RelativeLayout rlProgressLayout, rlEditFeed;
     Toolbar toolbar;
     RecyclerView rvUserFeeds;
@@ -101,7 +103,8 @@ public class ProfileActivity extends AppCompatActivity implements FeedsAdapter.O
         tvEmail = (TextView) findViewById(R.id.tvEmail);
         tvAddress = (TextView) findViewById(R.id.tvAddress);
         tvContactNo = (TextView) findViewById(R.id.tvContactNo);
-        etWritePost = (EditText) findViewById(R.id.etWritePost);
+//        etWritePost = (EditText) findViewById(R.id.etWritePost);
+        tvWritePost = (TextView) findViewById(R.id.tvWritePost);
         rlProgressLayout = (RelativeLayout) findViewById(R.id.rlProgressLayout);
         rlProgressLayout.setVisibility(View.GONE);
         rvUserFeeds = (RecyclerView) findViewById(R.id.rvUserFeeds);
@@ -131,41 +134,51 @@ public class ProfileActivity extends AppCompatActivity implements FeedsAdapter.O
     }
 
     private void addTextChangeListener() {
-        etWritePost.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String str = etWritePost.getText().toString();
-                if (count == 0 || TextUtils.isEmpty(str)) {
-                    ivPost.setVisibility(View.GONE);
-                } else {
-                    ivPost.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
+//        etWritePost.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                String str = etWritePost.getText().toString();
+//                if (count == 0 || TextUtils.isEmpty(str)) {
+//                    ivPost.setVisibility(View.GONE);
+//                } else {
+//                    ivPost.setVisibility(View.VISIBLE);
+//                }
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//            }
+//        });
     }
 
     private void addClickListeners() {
         ivPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(etWritePost.getText())) {
-                    etWritePost.setError("You must write something first");
-                } else {
-                    rlProgressLayout.setVisibility(View.VISIBLE);
-                    etWritePost.setClickable(false);
-                    ApplicationUtility.hideKeyboard(context, v);
-                    postFeed();
-                }
+//                if (TextUtils.isEmpty(etWritePost.getText())) {
+//                    etWritePost.setError("You must write something first");
+//                } else {
+//                    rlProgressLayout.setVisibility(View.VISIBLE);
+//                    etWritePost.setClickable(false);
+//                    ApplicationUtility.hideKeyboard(context, v);
+//                    //postFeed();
+//                }
+
+            }
+        });
+
+        rlEditFeed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent cIntent = new Intent(context,CreateFeedActivity.class);
+                cIntent.putExtra(StaticData.USER_ID,user_id);
+                startActivity(cIntent);
             }
         });
 
@@ -296,6 +309,7 @@ public class ProfileActivity extends AppCompatActivity implements FeedsAdapter.O
     private void prepareData(ProfileInfoResponse profileInfoResponse) {
         user = profileInfoResponse.getUser();
         userFeeds = modifyFeeds(profileInfoResponse.getPost());
+        Collections.reverse(userFeeds);
         profileFeedsAdapter = new FeedsAdapter(userFeeds, context, this);
         rvUserFeeds.setAdapter(profileFeedsAdapter);
         if (!isUpdateFeed) {
@@ -315,25 +329,25 @@ public class ProfileActivity extends AppCompatActivity implements FeedsAdapter.O
         }
         return feeds;
     }
-
-    private void postFeed() {
-        if (ApplicationUtility.checkInternet(context)) {
-            HashMap<String, String> hmParams = new HashMap<String, String>();
-            hmParams.put(StaticData.USER_ID, user_id);
-            hmParams.put(StaticData.TYPE, "member");                //Must be dynamic
-            hmParams.put(StaticData.POST, etWritePost.getText().toString());
-            hmParams.put(StaticData.IMG_URL, "");
-            String jsonParam = UserNChurchUtils.prepareJsonParam(hmParams);
-            Log.e("JsonParam", jsonParam);
-            Call<CommonResponse> call = apiService.postUserFeed(jsonParam, StaticData.AUTH_TOKEN);
-            call.enqueue(userPostResponse);
-        } else {
-            rlProgressLayout.setVisibility(View.GONE);
-            etWritePost.setClickable(true);
-            etWritePost.setTextColor(getResources().getColor(R.color.black));
-            ApplicationUtility.openNetworkDialog(this);
-        }
-    }
+//
+//    private void postFeed() {
+//        if (ApplicationUtility.checkInternet(context)) {
+//            HashMap<String, String> hmParams = new HashMap<String, String>();
+//            hmParams.put(StaticData.USER_ID, user_id);
+//            hmParams.put(StaticData.TYPE, "member");                //Must be dynamic
+//            hmParams.put(StaticData.POST, etWritePost.getText().toString());
+//            hmParams.put(StaticData.IMG_URL, "");
+//            String jsonParam = UserNChurchUtils.prepareJsonParam(hmParams);
+//            Log.e("JsonParam", jsonParam);
+//            Call<CommonResponse> call = apiService.postUserFeed(jsonParam, StaticData.AUTH_TOKEN,"");
+//            call.enqueue(userPostResponse);
+//        } else {
+//            rlProgressLayout.setVisibility(View.GONE);
+//            etWritePost.setClickable(true);
+//            etWritePost.setTextColor(getResources().getColor(R.color.black));
+//            ApplicationUtility.openNetworkDialog(this);
+//        }
+//    }
 
     private void followUser(User user) {
         if (ApplicationUtility.checkInternet(context)) {
@@ -392,31 +406,31 @@ public class ProfileActivity extends AppCompatActivity implements FeedsAdapter.O
         }
     };
 
-    Callback<CommonResponse> userPostResponse = new Callback<CommonResponse>() {
-        @Override
-        public void onResponse(Response<CommonResponse> response, Retrofit retrofit) {
+//    Callback<CommonResponse> userPostResponse = new Callback<CommonResponse>() {
+//        @Override
+//        public void onResponse(Response<CommonResponse> response, Retrofit retrofit) {
+////            rlProgressLayout.setVisibility(View.GONE);
+//            isUpdateFeed = true;
 //            rlProgressLayout.setVisibility(View.GONE);
-            isUpdateFeed = true;
-            rlProgressLayout.setVisibility(View.GONE);
-            getUserInfoFromServer();
-            etWritePost.setClickable(true);
-            if (response.body().isSuccess()) {
-                etWritePost.setText("");
-            } else {
-                etWritePost.setClickable(true);
-                etWritePost.setTextColor(getResources().getColor(R.color.black));
-                Toast.makeText(context, "Try Again!!", Toast.LENGTH_SHORT).show();
-            }
-        }
-
-        @Override
-        public void onFailure(Throwable t) {
-            rlProgressLayout.setVisibility(View.GONE);
-            etWritePost.setClickable(true);
-            etWritePost.setTextColor(getResources().getColor(R.color.black));
-            Toast.makeText(context, "Problem updating post. Please try again.", Toast.LENGTH_SHORT).show();
-        }
-    };
+//            getUserInfoFromServer();
+//            etWritePost.setClickable(true);
+//            if (response.body().isSuccess()) {
+//                etWritePost.setText("");
+//            } else {
+//                etWritePost.setClickable(true);
+//                etWritePost.setTextColor(getResources().getColor(R.color.black));
+//                Toast.makeText(context, "Try Again!!", Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//
+//        @Override
+//        public void onFailure(Throwable t) {
+//            rlProgressLayout.setVisibility(View.GONE);
+//            etWritePost.setClickable(true);
+//            etWritePost.setTextColor(getResources().getColor(R.color.black));
+//            Toast.makeText(context, "Problem updating post. Please try again.", Toast.LENGTH_SHORT).show();
+//        }
+//    };
 
     @Override
     public void onCommentClicked(String post_id, int noOfLikes) {

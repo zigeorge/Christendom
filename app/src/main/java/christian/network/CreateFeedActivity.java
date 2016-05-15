@@ -1,11 +1,23 @@
 package christian.network;
 
+import android.Manifest;
+import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.location.LocationManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -15,6 +27,9 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import christian.network.interfaces.APIServiceInterface;
@@ -41,7 +56,7 @@ public class CreateFeedActivity extends AppCompatActivity {
     //Web Service
     Retrofit retrofit;
     APIServiceInterface apiService;
-    String user_id, church_id;
+    String user_id, image="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +120,7 @@ public class CreateFeedActivity extends AppCompatActivity {
 
     private void getDataFromIntent() {
         user_id = getIntent().getStringExtra(StaticData.USER_ID);
-        church_id = getIntent().getStringExtra(StaticData.CHURCH_ID);
+//        church_id = getIntent().getStringExtra(StaticData.CHURCH_ID);
     }
 
     private void addClickListenersForImageView() {
@@ -114,10 +129,32 @@ public class CreateFeedActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Open Gallery and Camera Handling Function Permission
-                Toast.makeText(context, "Work in progress", Toast.LENGTH_SHORT).show();
+                ApplicationUtility.hideKeyboard(context,etWritePost);
+                getImage();
+            }
+        });
+        ivDeleteImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                image = "";
+                rlImageLayout.setVisibility(View.GONE);
             }
         });
 
+    }
+
+    private void getImage() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            //SEE NEXT STEP
+            if (ApplicationUtility.checkPermissions(this)) {
+                ApplicationUtility.getImageFromDevice(this);
+            } else {
+                // Request Permission
+                ApplicationUtility.requestPermission(this);
+            }
+        } else {
+            ApplicationUtility.getImageFromDevice(this);
+        }
     }
 
     private void addTextClickListener() {
@@ -137,22 +174,57 @@ public class CreateFeedActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == StaticData.SELECT_PICTURE && resultCode == RESULT_OK) {
+            try {
+                Uri selectedImageUri = data.getData();
+                String selectedImagePath = ApplicationUtility.getPath(selectedImageUri, this);
+                System.out.println(selectedImagePath);
+                ivPostImage.setImageURI(Uri.parse(selectedImagePath));
+                setImageString();
+                rlImageLayout.setVisibility(View.VISIBLE);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void setImageString(){
+        BitmapDrawable drawable = (BitmapDrawable) ivPostImage
+                .getDrawable();
+        Bitmap bitmap = drawable.getBitmap();
+        image = ApplicationUtility.getImageInBase64(bitmap);
+    }
+
     private void postFeed() {
         if (ApplicationUtility.checkInternet(context)) {
             HashMap<String, String> hmParams = new HashMap<String, String>();
             hmParams.put(StaticData.USER_ID, user_id);
             hmParams.put(StaticData.TYPE, "member");
             hmParams.put(StaticData.POST, etWritePost.getText().toString());
-            hmParams.put(StaticData.IMG_URL, "");
+            hmParams.put(StaticData.IMG_URL, getImageUrl());
             String jsonParam = UserNChurchUtils.prepareJsonParam(hmParams);
+//            try {
+//                jsonParam = URLEncoder.encode(jsonParam, "UTF-8");
+//                Log.e("JSONPARAM", jsonParam);
+//            } catch (UnsupportedEncodingException e) {
+//                e.printStackTrace();
+//            }
             Log.e("JsonParam", jsonParam);
-            Call<CommonResponse> call = apiService.postUserFeed(jsonParam, StaticData.AUTH_TOKEN);
+            Call<CommonResponse> call = apiService.postUserFeed(jsonParam, StaticData.AUTH_TOKEN, image);
             call.enqueue(userPostResponse);
         } else {
             etWritePost.setClickable(true);
             etWritePost.setTextColor(getResources().getColor(R.color.black));
             ApplicationUtility.openNetworkDialog(this);
         }
+    }
+
+    private String getImageUrl(){
+        String url = StaticData.IMG_BASE_URL+StaticData.IMG_POST_EXTNSN+Calendar.getInstance().getTimeInMillis();
+        return url;
     }
 
     Callback<CommonResponse> userPostResponse = new Callback<CommonResponse>() {
@@ -176,4 +248,30 @@ public class CreateFeedActivity extends AppCompatActivity {
             Toast.makeText(context, "Problem updating post. Please try again.", Toast.LENGTH_SHORT).show();
         }
     };
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case StaticData.PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                        && grantResults[1] == PackageManager.PERMISSION_GRANTED
+                        && grantResults[2] == PackageManager.PERMISSION_GRANTED) {
+                    /**
+                     * We are good, turn on monitoring
+                     */
+                    if (ApplicationUtility.checkPermissions(this)) {
+                        ApplicationUtility.getImageFromDevice(this);
+                    } else {
+                        ApplicationUtility.requestPermission(this);
+                    }
+                } else {
+                    /**
+                     * No permissions, block out all activities that require a location to function
+                     */
+                    Toast.makeText(this, "Permission Not Granted.", Toast.LENGTH_LONG).show();
+                }
+                break;
+        }
+    }
+
 }
