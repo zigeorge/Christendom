@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,8 +27,6 @@ import java.util.HashMap;
 import java.util.TimeZone;
 
 import christian.network.ProfileActivity;
-import christian.network.entity.User;
-import de.hdodenhof.circleimageview.CircleImageView;
 import christian.network.R;
 import christian.network.entity.Feed;
 import christian.network.interfaces.APIServiceInterface;
@@ -37,6 +34,7 @@ import christian.network.responses.CommonResponse;
 import christian.network.utils.ApplicationUtility;
 import christian.network.utils.StaticData;
 import christian.network.utils.UserNChurchUtils;
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.GsonConverterFactory;
@@ -46,7 +44,7 @@ import retrofit.Retrofit;
 /**
  * Created by User on 27-Apr-16.
  */
-public class FeedsAdapter extends RecyclerView.Adapter<FeedsAdapter.FeedViewHolder> {
+public class FeedsAdapterProfile extends RecyclerView.Adapter<FeedsAdapterProfile.FeedViewHolder> {
 
     private ArrayList<Feed> feeds;
 
@@ -61,7 +59,7 @@ public class FeedsAdapter extends RecyclerView.Adapter<FeedsAdapter.FeedViewHold
 
     OnCommentClickedListener onCommentClickedListener;
 
-    public FeedsAdapter(ArrayList<Feed> feeds, Context context, AppCompatActivity activity) {
+    public FeedsAdapterProfile(ArrayList<Feed> feeds, Context context, AppCompatActivity activity) {
         this.feeds = feeds;
         this.context = context;
         this.activity = activity;
@@ -181,31 +179,7 @@ public class FeedsAdapter extends RecyclerView.Adapter<FeedsAdapter.FeedViewHold
             }
         });
 
-        holder.tvUsername.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openUserProfile(feed);
-            }
-        });
-
 //        addListeners(holder, position);
-    }
-
-    private void openUserProfile(Feed feed) {
-        SharedPreferences preferences = context.getSharedPreferences(StaticData.APP_PREFERENCE, Context.MODE_PRIVATE);
-        String user_id = preferences.getString(StaticData.USER_ID, "");
-        boolean isMyProfile = false;
-        boolean isFollowed = true;
-        if (user_id.equalsIgnoreCase(feed.getUser_id())) {
-            isFollowed = false;
-            isMyProfile = true;
-        }
-        Intent pIntent = new Intent(context, ProfileActivity.class);
-        pIntent.putExtra(StaticData.USER_ID, feed.getUser_id());
-        pIntent.putExtra(StaticData.USER_FULL_NAME, feed.getFirst_name() + " " + feed.getLast_name());
-        pIntent.putExtra(StaticData.USER_IS_FOLLOWED, isFollowed);
-        pIntent.putExtra(StaticData.USER_PROFILE, isMyProfile);
-        context.startActivity(pIntent);
     }
 
     @Override

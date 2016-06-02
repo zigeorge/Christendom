@@ -1,21 +1,15 @@
 package christian.network;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
+import christian.network.services.MyFirebaseInstanceIdService;
+import christian.network.utils.ApplicationUtility;
 import christian.network.utils.StaticData;
 
 public class SplashActivity extends AppCompatActivity {
@@ -24,7 +18,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        printKeyHash(this);
+        ApplicationUtility.printKeyHash(this);
         final boolean isSessionExists = getSesionFromPref();
 
         new Handler().postDelayed(new Runnable() {
@@ -49,39 +43,6 @@ public class SplashActivity extends AppCompatActivity {
     private boolean getSesionFromPref() {
         SharedPreferences sharedPreferences = getSharedPreferences(StaticData.APP_PREFERENCE, Context.MODE_PRIVATE);
         return sharedPreferences.getBoolean(StaticData.SESSION, false);
-    }
-
-    public static String printKeyHash(Activity context) {
-        PackageInfo packageInfo;
-        String key = null;
-        try {
-            //getting application package name, as defined in manifest
-            String packageName = context.getApplicationContext().getPackageName();
-
-            //Retriving package info
-            packageInfo = context.getPackageManager().getPackageInfo(packageName,
-                    PackageManager.GET_SIGNATURES);
-
-            Log.e("Package Name=", context.getApplicationContext().getPackageName());
-
-            for (Signature signature : packageInfo.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                key = new String(Base64.encode(md.digest(), 0));
-
-                // String key = new String(Base64.encodeBytes(md.digest()));
-                Log.e("Key Hash=", key);
-            }
-        } catch (PackageManager.NameNotFoundException e1) {
-            Log.e("Name not found", e1.toString());
-        }
-        catch (NoSuchAlgorithmException e) {
-            Log.e("No such an algorithm", e.toString());
-        } catch (Exception e) {
-            Log.e("Exception", e.toString());
-        }
-
-        return key;
     }
 
     @Override

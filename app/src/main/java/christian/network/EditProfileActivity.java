@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
@@ -35,6 +36,7 @@ public class EditProfileActivity extends AppCompatActivity {
     FloatingHintEditText fhetFirstName, fhetLastName, fhetAddress, fhetContactNo;
     Button btnSubmit;
     Toolbar toolbar;
+    RelativeLayout rlProgress;
 
     //Web Service
     Retrofit retrofit;
@@ -70,7 +72,9 @@ public class EditProfileActivity extends AppCompatActivity {
         fhetAddress = (FloatingHintEditText) findViewById(R.id.fhetAddress);
         fhetContactNo = (FloatingHintEditText) findViewById(R.id.fhetContactNo);
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.inc_topbar);
+        rlProgress = (RelativeLayout) findViewById(R.id.rlProgress);
+        rlProgress.setVisibility(View.GONE);
     }
 
     private void initActionBar() {
@@ -123,6 +127,7 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (checkFields()) {
+                    rlProgress.setVisibility(View.VISIBLE);
                     submitChanges();
                 }
             }
@@ -156,6 +161,7 @@ public class EditProfileActivity extends AppCompatActivity {
             Call<CommonResponse> call = apiService.editProfileInfo(jsonParam, StaticData.AUTH_TOKEN);
             call.enqueue(getProfileResponse);
         } else {
+            rlProgress.setVisibility(View.GONE);
             ApplicationUtility.openNetworkDialog(this);
         }
     }
@@ -172,6 +178,7 @@ public class EditProfileActivity extends AppCompatActivity {
     Callback<CommonResponse> getProfileResponse = new Callback<CommonResponse>() {
         @Override
         public void onResponse(Response<CommonResponse> response, Retrofit retrofit) {
+            rlProgress.setVisibility(View.GONE);
             if (response.body().isSuccess()) {
                 updatePreference();
                 Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
@@ -183,6 +190,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
         @Override
         public void onFailure(Throwable t) {
+            rlProgress.setVisibility(View.GONE);
             Toast.makeText(context, "Problem connecting to server", Toast.LENGTH_SHORT).show();
         }
     };

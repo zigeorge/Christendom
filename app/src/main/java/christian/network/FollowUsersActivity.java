@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class FollowUsersActivity extends AppCompatActivity {
     ViewPager vpUsers;
     PagerTabStrip ptsUserPager;
     Toolbar toolbar;
+    RelativeLayout rlProgress;
 
     //Web Service
     Retrofit retrofit;
@@ -66,6 +68,8 @@ public class FollowUsersActivity extends AppCompatActivity {
         vpUsers = (ViewPager) findViewById(R.id.vpUsers);
         ptsUserPager = (PagerTabStrip) findViewById(R.id.pager_header);
         toolbar = (Toolbar) findViewById(R.id.tbFollow);
+        rlProgress = (RelativeLayout) findViewById(R.id.rlProgress);
+        rlProgress.setVisibility(View.VISIBLE);
 
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +107,7 @@ public class FollowUsersActivity extends AppCompatActivity {
             Call<AllUsersResponse> call = apiService.getAllUsers(jsonParam, StaticData.AUTH_TOKEN);
             call.enqueue(allUserResponseCallback);
         } else {
+            rlProgress.setVisibility(View.GONE);
             ApplicationUtility.openNetworkDialog(FollowUsersActivity.this);
         }
     }
@@ -124,6 +129,7 @@ public class FollowUsersActivity extends AppCompatActivity {
     Callback<AllUsersResponse> allUserResponseCallback = new Callback<AllUsersResponse>() {
         @Override
         public void onResponse(Response<AllUsersResponse> response, Retrofit retrofit) {
+            rlProgress.setVisibility(View.GONE);
             Log.e("Response", response.body().getMessage());
             if (response.body().getMessage().equalsIgnoreCase("success")) {
                 members = response.body().getAll_member_not_follow();
@@ -139,6 +145,7 @@ public class FollowUsersActivity extends AppCompatActivity {
 
         @Override
         public void onFailure(Throwable t) {
+            rlProgress.setVisibility(View.GONE);
             Toast.makeText(context, "Failed to get all users, please try again by restarting from bgining", Toast.LENGTH_SHORT).show();
         }
     };

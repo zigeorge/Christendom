@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,13 +10,15 @@
     tools:context="christian.network.ProfileActivity">
 
     <include
+        android:id="@+id/inc_topbar"
         layout="@layout/appbar_feed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/inc_topbar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -81,24 +83,39 @@
                         android:textSize="@dimen/dimTex18" />
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/ivFollow"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
                     android:layout_marginBottom="@dimen/dim10"
-                    android:layout_marginRight="@dimen/dim20"
-                    android:src="@drawable/ic_profile_follow" />
+                    android:layout_marginRight="@dimen/dim15"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ProgressBar
+                        android:id="@+id/pbFollow"
+                        android:layout_width="@dimen/dim20"
+                        android:layout_height="@dimen/dim20"
+                        android:layout_marginRight="@dimen/dim5"
+                        android:layout_toLeftOf="@+id/ivFollow" />
+
+                    <ImageView
+                        android:id="@+id/ivFollow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_profile_follow" />
+
+                </LinearLayout>
 
                 <ImageView
                     android:id="@+id/ivProfileSettings"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/llProfileContents"
                     android:layout_marginBottom="@dimen/dim10"
                     android:layout_marginLeft="@dimen/dim30"
+                    android:layout_toRightOf="@+id/llProfileContents"
                     android:src="@drawable/ic_wrench_sel" />
 
             </RelativeLayout>
@@ -195,11 +212,11 @@
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:gravity="top"
-                    android:textSize="@dimen/dimTex18"
-                    android:hint="What's on your mind?"
+                    android:hint="@string/text_hint_feed"
                     android:padding="@dimen/dim8"
                     android:textColor="@color/black"
-                    android:textCursorDrawable="@color/black" />
+                    android:textCursorDrawable="@color/black"
+                    android:textSize="@dimen/dimTex18" />
 
                 <ImageView
                     android:id="@+id/ivGetPhoto"
@@ -221,7 +238,7 @@
                 android:id="@+id/rlProgressLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <ProgressBar
                     android:id="@+id/progressBar"
@@ -248,4 +265,19 @@
 
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlProgress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparent_black"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/pbProfile"
+            android:layout_width="@dimen/dim50"
+            android:layout_height="@dimen/dim50"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
+</RelativeLayout>

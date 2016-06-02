@@ -16,8 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/inc_topbar"
-        android:padding="@dimen/dim10"
-        android:elevation="@dimen/dim5">
+        android:padding="@dimen/dim10">
 
         <ImageView
             android:id="@+id/ivProfileImage"
@@ -37,7 +36,7 @@
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:gravity="top"
-            android:hint="What's on your mind?"
+            android:hint="@string/text_hint_feed"
             android:padding="@dimen/dim8"
             android:textColor="@color/black"
             android:textCursorDrawable="@color/black" />
@@ -51,12 +50,13 @@
 
     <RelativeLayout
         android:id="@+id/rlImageLayout"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/llBottomButtons"
         android:layout_below="@+id/rlEditFeed"
         android:layout_marginBottom="@dimen/dim10"
         android:layout_marginTop="@dimen/dim10"
+        android:padding="@dimen/dim10"
         android:visibility="gone">
 
         <ImageView
@@ -64,8 +64,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/dim15"
-            android:scaleType="fitStart"
-            android:src="@drawable/sample_image" />
+            android:layout_alignParentRight="true"
+            android:foregroundGravity="right"
+            android:scaleType="fitStart" />
 
         <ImageView
             android:id="@+id/ivDeleteImage"
@@ -75,4 +76,20 @@
             android:src="@drawable/ic_close_image" />
 
     </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlProgress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparent_black"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="@dimen/dim50"
+            android:layout_height="@dimen/dim50"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
+
 </RelativeLayout>

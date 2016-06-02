@@ -1,34 +1,27 @@
 package christian.network;
 
-import android.Manifest;
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -47,9 +40,10 @@ public class CreateFeedActivity extends AppCompatActivity {
 
     ImageView ivProfileImage, ivPostImage, ivDeleteImage, ivGetPhoto;
     EditText etWritePost;
-    RelativeLayout rlImageLayout;
+    RelativeLayout rlImageLayout, rlProgress;
     Toolbar toolbar;
     ImageView ivPost;
+    ProgressBar pbPostFeed;
 
     Context context;
 
@@ -108,8 +102,11 @@ public class CreateFeedActivity extends AppCompatActivity {
         ivGetPhoto = (ImageView) findViewById(R.id.ivGetPhoto);
         etWritePost = (EditText) findViewById(R.id.etWritePost);
         rlImageLayout = (RelativeLayout) findViewById(R.id.rlImageLayout);
+        rlProgress = (RelativeLayout) findViewById(R.id.rlProgress);
         toolbar = (Toolbar) findViewById(R.id.inc_topbar);
         ivPost = (ImageView) toolbar.findViewById(R.id.toolbar_menu);
+        pbPostFeed = (ProgressBar) toolbar.findViewById(R.id.progressBar);
+        pbPostFeed.setVisibility(View.GONE);
     }
 
     private void setProfileImage() {
@@ -167,6 +164,9 @@ public class CreateFeedActivity extends AppCompatActivity {
                 } else {
                     etWritePost.setClickable(false);
                     etWritePost.setTextColor(getResources().getColor(R.color.grey_555));
+                    pbPostFeed.setVisibility(View.VISIBLE);
+                    ivPost.setVisibility(View.GONE);
+                    rlProgress.setVisibility(View.VISIBLE);
                     postFeed();
                 }
 
@@ -218,6 +218,9 @@ public class CreateFeedActivity extends AppCompatActivity {
         } else {
             etWritePost.setClickable(true);
             etWritePost.setTextColor(getResources().getColor(R.color.black));
+            pbPostFeed.setVisibility(View.GONE);
+            ivPost.setVisibility(View.VISIBLE);
+            rlProgress.setVisibility(View.GONE);
             ApplicationUtility.openNetworkDialog(this);
         }
     }
@@ -230,6 +233,9 @@ public class CreateFeedActivity extends AppCompatActivity {
     Callback<CommonResponse> userPostResponse = new Callback<CommonResponse>() {
         @Override
         public void onResponse(Response<CommonResponse> response, Retrofit retrofit) {
+            pbPostFeed.setVisibility(View.GONE);
+            ivPost.setVisibility(View.VISIBLE);
+            rlProgress.setVisibility(View.GONE);
             if (response.body().isSuccess()) {
                 Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 etWritePost.setText("");
@@ -243,7 +249,10 @@ public class CreateFeedActivity extends AppCompatActivity {
 
         @Override
         public void onFailure(Throwable t) {
+            pbPostFeed.setVisibility(View.GONE);
+            ivPost.setVisibility(View.VISIBLE);
             etWritePost.setClickable(true);
+            rlProgress.setVisibility(View.GONE);
             etWritePost.setTextColor(getResources().getColor(R.color.black));
             Toast.makeText(context, "Problem updating post. Please try again.", Toast.LENGTH_SHORT).show();
         }

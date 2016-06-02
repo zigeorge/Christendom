@@ -8,13 +8,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
+import christian.network.adapters.FeedsAdapterProfile;
 import de.hdodenhof.circleimageview.CircleImageView;
 import christian.network.adapters.FeedsAdapter;
 import christian.network.entity.User;
@@ -41,16 +40,17 @@ import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
 
-public class ProfileActivity extends AppCompatActivity implements FeedsAdapter.OnCommentClickedListener {
+public class ProfileActivity extends AppCompatActivity implements FeedsAdapterProfile.OnCommentClickedListener {
 
     ImageView ivChurchCp, ivGetPhoto, ivPost, ivFollow, ivProfileSettings;
     CircleImageView civProfilePhoto, civProfileImage;
     TextView tvUserName, tvChurchName, tvEmail, tvAddress, tvContactNo, tvWriteStatusLabel;
 //    EditText etWritePost;
     TextView tvWritePost;
-    RelativeLayout rlProgressLayout, rlEditFeed;
+    RelativeLayout rlProgressLayout, rlEditFeed, rlProgress;
     Toolbar toolbar;
     RecyclerView rvUserFeeds;
+    ProgressBar pbFollow;
 
     SharedPreferences preferences;
 
@@ -59,7 +59,7 @@ public class ProfileActivity extends AppCompatActivity implements FeedsAdapter.O
     User user = new User();
     ArrayList<Feed> userFeeds = new ArrayList<>();
 
-    FeedsAdapter profileFeedsAdapter;
+    FeedsAdapterProfile profileFeedsAdapter;
 
     //Web Service
     Retrofit retrofit;
@@ -95,7 +95,7 @@ public class ProfileActivity extends AppCompatActivity implements FeedsAdapter.O
         ivGetPhoto = (ImageView) findViewById(R.id.ivGetPhoto);
         civProfileImage = (CircleImageView) findViewById(R.id.civProfileImage);
         civProfilePhoto = (CircleImageView) findViewById(R.id.civProfilePhoto);
-        toolbar = (Toolbar) findViewById(R.id.toolbar_feed);
+        toolbar = (Toolbar) findViewById(R.id.inc_topbar);
         ivPost = (ImageView) toolbar.findViewById(R.id.toolbar_menu);
         ivPost.setVisibility(View.GONE);
         tvUserName = (TextView) findViewById(R.id.tvUserName);
@@ -107,6 +107,8 @@ public class ProfileActivity extends AppCompatActivity implements FeedsAdapter.O
         tvWritePost = (TextView) findViewById(R.id.tvWritePost);
         rlProgressLayout = (RelativeLayout) findViewById(R.id.rlProgressLayout);
         rlProgressLayout.setVisibility(View.GONE);
+        rlProgress = (RelativeLayout) findViewById(R.id.rlProgress);
+        rlProgress.setVisibility(View.GONE);
         rvUserFeeds = (RecyclerView) findViewById(R.id.rvUserFeeds);
         rvUserFeeds.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(context);
@@ -115,7 +117,10 @@ public class ProfileActivity extends AppCompatActivity implements FeedsAdapter.O
         tvWriteStatusLabel = (TextView) findViewById(R.id.tvWriteStatusLabel);
         rlEditFeed = (RelativeLayout) findViewById(R.id.rlEditFeed);
         ivFollow = (ImageView) findViewById(R.id.ivFollow);
+        ivFollow.setVisibility(View.GONE);
         ivProfileSettings = (ImageView) findViewById(R.id.ivProfileSettings);
+        pbFollow = (ProgressBar) findViewById(R.id.pbFollow);
+        pbFollow.setVisibility(View.GONE);
     }
 
     private void initActionBar() {
@@ -209,7 +214,7 @@ public class ProfileActivity extends AppCompatActivity implements FeedsAdapter.O
 
     private void getUserInfo() {
         prefUserId = preferences.getString(StaticData.USER_ID, "");
-
+        rlProgress.setVisibility(View.VISIBLE);
         if (isMyPforile) {
             user_id = prefUserId;
             getUserInfoFromPref();
@@ -268,6 +273,7 @@ public class ProfileActivity extends AppCompatActivity implements FeedsAdapter.O
             Call<ProfileInfoResponse> call = apiService.getProfileInfo(jsonParam, StaticData.AUTH_TOKEN);
             call.enqueue(getProfileResponse);
         } else {
+            rlProgress.setVisibility(View.GONE);
             ApplicationUtility.openNetworkDialog(this);
         }
     }
@@ -291,10 +297,12 @@ public class ProfileActivity extends AppCompatActivity implements FeedsAdapter.O
     }
 
     private void setFollowing() {
+        is_followed = true;
         ivFollow.setImageResource(R.drawable.ic_profile_following);
     }
 
     private void setFollow() {
+        is_followed = false;
         ivFollow.setImageResource(R.drawable.ic_profile_follow);
     }
 
@@ -308,13 +316,14 @@ public class ProfileActivity extends AppCompatActivity implements FeedsAdapter.O
 
     private void prepareData(ProfileInfoResponse profileInfoResponse) {
         user = profileInfoResponse.getUser();
+//        is_followed = user.isFollowed();
         userFeeds = modifyFeeds(profileInfoResponse.getPost());
         Collections.reverse(userFeeds);
-        profileFeedsAdapter = new FeedsAdapter(userFeeds, context, this);
+        profileFeedsAdapter = new FeedsAdapterProfile(userFeeds, context, this);
         rvUserFeeds.setAdapter(profileFeedsAdapter);
-        if (!isUpdateFeed) {
-            setDataInUI();
-        }
+//        if (!isUpdateFeed) {
+        setDataInUI();
+//        }
     }
 
     private ArrayList<Feed> modifyFeeds(ArrayList<Feed> feeds) {
@@ -351,19 +360,21 @@ public class ProfileActivity extends AppCompatActivity implements FeedsAdapter.O
 
     private void followUser(User user) {
         if (ApplicationUtility.checkInternet(context)) {
+            pbFollow.setVisibility(View.VISIBLE);
             HashMap<String, String> hmParams = new HashMap<String, String>();
             hmParams.put(StaticData.USER_ID, prefUserId);
             hmParams.put(StaticData.FOLLOW_ID, user_id);
             String jsonParam = UserNChurchUtils.prepareJsonParam(hmParams);
             Log.e("PastorJsonParam", jsonParam);
             Call<CommonResponse> call;
-            if (user.isFollowed()) {
+            if (is_followed) {
                 call = apiService.unFollowUser(jsonParam, StaticData.AUTH_TOKEN);
             } else {
                 call = apiService.followUser(jsonParam, StaticData.AUTH_TOKEN);
             }
             call.enqueue(followUserResponse);
         } else {
+            pbFollow.setVisibility(View.GONE);
             ApplicationUtility.openNetworkDialog(this);
         }
     }
@@ -371,8 +382,9 @@ public class ProfileActivity extends AppCompatActivity implements FeedsAdapter.O
     Callback<CommonResponse> followUserResponse = new Callback<CommonResponse>() {
         @Override
         public void onResponse(Response<CommonResponse> response, Retrofit retrofit) {
+            pbFollow.setVisibility(View.GONE);
             if (response.body().isSuccess()) {
-                if (user.isFollowed()) {
+                if (is_followed) {
                     setFollow();
                 } else {
                     setFollowing();
@@ -385,13 +397,14 @@ public class ProfileActivity extends AppCompatActivity implements FeedsAdapter.O
 
         @Override
         public void onFailure(Throwable t) {
-
+            pbFollow.setVisibility(View.GONE);
         }
     };
 
     Callback<ProfileInfoResponse> getProfileResponse = new Callback<ProfileInfoResponse>() {
         @Override
         public void onResponse(Response<ProfileInfoResponse> response, Retrofit retrofit) {
+            rlProgress.setVisibility(View.GONE);
             if (response.body().isSuccess()) {
                 rlProgressLayout.setVisibility(View.GONE);
                 prepareData(response.body());
@@ -402,6 +415,7 @@ public class ProfileActivity extends AppCompatActivity implements FeedsAdapter.O
 
         @Override
         public void onFailure(Throwable t) {
+            rlProgress.setVisibility(View.GONE);
             Toast.makeText(context, "Check your internet connection.", Toast.LENGTH_SHORT).show();
         }
     };

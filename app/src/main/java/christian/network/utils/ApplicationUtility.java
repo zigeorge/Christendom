@@ -7,7 +7,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,7 +20,9 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -34,6 +38,8 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -41,6 +47,8 @@ import java.util.Date;
 import christian.network.R;
 import christian.network.customcontrol.TouchImageView;
 import christian.network.entity.User;
+import christian.network.fragment.ChurchDialogFragment;
+import christian.network.fragment.NetworkDialogFragment;
 import christian.network.responses.SignUpResponse;
 
 /**
@@ -84,14 +92,47 @@ public class ApplicationUtility {
         return null;
     }
 
-    public static String getSignUpJSONParam(Bundle bundle, String authType) {
+    public static String printKeyHash(Activity context) {
+        PackageInfo packageInfo;
+        String key = null;
+        try {
+            //getting application package name, as defined in manifest
+            String packageName = context.getApplicationContext().getPackageName();
+
+            //Retriving package info
+            packageInfo = context.getPackageManager().getPackageInfo(packageName,
+                    PackageManager.GET_SIGNATURES);
+
+            Log.e("Package Name=", context.getApplicationContext().getPackageName());
+
+            for (Signature signature : packageInfo.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                key = new String(android.util.Base64.encode(md.digest(), 0));
+
+                // String key = new String(Base64.encodeBytes(md.digest()));
+                Log.e("Key Hash=", key);
+            }
+        } catch (PackageManager.NameNotFoundException e1) {
+            Log.e("Name not found", e1.toString());
+        }
+        catch (NoSuchAlgorithmException e) {
+            Log.e("No such an algorithm", e.toString());
+        } catch (Exception e) {
+            Log.e("Exception", e.toString());
+        }
+
+        return key;
+    }
+
+    public static String getSignUpJSONParam(Bundle bundle, String authType, String fcmToken) {
         String user_id = bundle.getString(StaticData.USER_ID);
         String email = bundle.getString(StaticData.USER_EMAIL);
         String first_name = bundle.getString(StaticData.USER_FIRST_NAME);
         String last_name = bundle.getString(StaticData.USER_LAST_NAME);
         String jSONParam = "{\"" + StaticData.USER_ID + "\":\"" + user_id + "\",\"auth_type\":\"" + authType + "\",\"" + StaticData.USER_EMAIL + "\":\"" + email + "\",\"" +
                 StaticData.USER_FIRST_NAME + "\":\"" + first_name + "\",\"" + StaticData.USER_LAST_NAME + "\":\"" + last_name + "\",\"" + StaticData.USER_ADDRESS + "\":\"\",\"" +
-                StaticData.USER_CONTACT + "\":\"\"}";
+                StaticData.USER_CONTACT + "\":\"\",\"" + StaticData.REG_ID + "\":\"" + fcmToken + "\"}";
         return jSONParam;
     }
 
@@ -123,23 +164,27 @@ public class ApplicationUtility {
         return isConnected;
     }
 
-    public static void openNetworkDialog(final Activity activity){
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+    public static void openNetworkDialog(final AppCompatActivity activity){
+//        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
 // 2. Chain together various setter methods to set the dialog characteristics
-        builder.setMessage(activity.getString(R.string.con_message))
-                .setTitle(activity.getString(R.string.con_title)).setCancelable(false).setPositiveButton(R.string.settings, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                activity.startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
-            }
-        }).setNegativeButton(R.string.dismiss, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                activity.finish();
-            }
-        }).create();
-        builder.show();
+//        builder.setMessage(activity.getString(R.string.con_message))
+//                .setTitle(activity.getString(R.string.con_title)).setCancelable(false).setPositiveButton(R.string.settings, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                activity.startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
+//            }
+//        }).setNegativeButton(R.string.dismiss, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                activity.finish();
+//            }
+//        }).create();
+//        builder.show();
+        FragmentManager fm = activity.getSupportFragmentManager();
+        NetworkDialogFragment networkDialogFragment = NetworkDialogFragment.newInstance();
+        networkDialogFragment.setCancelable(false);
+        networkDialogFragment.show(fm, "fragment_edit_name");
     }
 
     public static Date formatDate(String inputDate, SimpleDateFormat sdFormat) {

@@ -54,18 +54,24 @@
         android:id="@+id/tvLikeDetails"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dim50"
-        android:elevation="@dimen/dim5"
         android:gravity="center_vertical"
         android:padding="@dimen/dim10"
-        android:text="10 peoples liked this"
+        android:text=""
         android:textColor="@color/black" />
+
+    <View
+        android:id="@+id/vUnderline"
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_below="@id/tvLikeDetails"
+        android:background="@color/grey"/>
 
     <ListView
         android:id="@+id/lvComments"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/llBottomLayout"
-        android:layout_below="@+id/tvLikeDetails"
+        android:layout_below="@+id/vUnderline"
         android:layout_marginBottom="@dimen/dim5"
         android:layout_marginTop="@dimen/dim5" />
 

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +40,7 @@ import retrofit.Retrofit;
 public class UserListAdapter extends ArrayAdapter<User> {
 
     Context context;
-    Activity activity;
+    AppCompatActivity activity;
     int resId;
     ArrayList<User> users;
 
@@ -48,7 +49,7 @@ public class UserListAdapter extends ArrayAdapter<User> {
     APIServiceInterface apiService;
     String user_id;
 
-    public UserListAdapter(Context context, int resource, ArrayList<User> users, Activity activity) {
+    public UserListAdapter(Context context, int resource, ArrayList<User> users, AppCompatActivity activity) {
         super(context, resource, users);
         this.context = context;
         this.resId = resource;

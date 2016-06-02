@@ -35,4 +35,19 @@
         android:text="Proceed"
         android:textSize="@dimen/dimTex18"/>
 
+    <RelativeLayout
+        android:id="@+id/rlProgress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparent_black"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/pbChurch"
+            android:layout_width="@dimen/dim50"
+            android:layout_height="@dimen/dim50"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
+
 </RelativeLayout>

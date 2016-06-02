@@ -2,6 +2,7 @@ package christian.network.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.TimeZone;
 
 import christian.network.R;
 import christian.network.entity.Comment;
@@ -43,7 +45,7 @@ public class CommentsAdapter extends ArrayAdapter<Comment> {
     private ArrayList<Comment> comments;//, origChurches;
     private int delPosition;
     private boolean isDeleteEnabled;
-    private Activity activity;
+    private AppCompatActivity activity;
 //    private String user_id;
 //    ChurchFilter churchFilter;
 
@@ -51,7 +53,7 @@ public class CommentsAdapter extends ArrayAdapter<Comment> {
     Retrofit retrofit;
     APIServiceInterface apiService;
 
-    public CommentsAdapter(Context context, int resource, ArrayList<Comment> comments, Activity activity) {
+    public CommentsAdapter(Context context, int resource, ArrayList<Comment> comments, AppCompatActivity activity) {
         super(context, resource, comments);
         this.context = context;
         this.resId = resource;
@@ -149,10 +151,15 @@ public class CommentsAdapter extends ArrayAdapter<Comment> {
             return timeStamp;
         } else {
             Calendar cal = Calendar.getInstance();
+            cal.setTimeZone(TimeZone.getTimeZone("GMT+0"));
             long currentTimeMs = cal.getTimeInMillis();
             SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             Date commentDate = ApplicationUtility.formatDate(timeStamp, dtFormat);
-            timeStamp = UserNChurchUtils.getPostTime(commentDate, currentTimeMs);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeZone(TimeZone.getTimeZone("GMT+0"));
+            calendar.setTime(commentDate);
+            long commentTimeMs = calendar.getTimeInMillis();
+            timeStamp = UserNChurchUtils.getPostTime(commentTimeMs, currentTimeMs);
             return timeStamp;
         }
     }

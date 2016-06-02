@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public class SelectchurchActivity extends AppCompatActivity implements ChurchLis
     EditText etSearch;
     ListView lvChurches;
     Button btnProceed;
+    RelativeLayout rlProgress;
 
     //Web Service
     Retrofit retrofit;
@@ -68,7 +70,8 @@ public class SelectchurchActivity extends AppCompatActivity implements ChurchLis
         etSearch = (EditText) findViewById(R.id.etSearch);
         lvChurches = (ListView) findViewById(R.id.lvChurches);
         btnProceed = (Button) findViewById(R.id.btnProceed);
-
+        rlProgress = (RelativeLayout) findViewById(R.id.rlProgress);
+        rlProgress.setVisibility(View.VISIBLE);
         btnProceed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,6 +123,7 @@ public class SelectchurchActivity extends AppCompatActivity implements ChurchLis
             Call<AllChurchResponse> call = apiService.getAllChurch(StaticData.AUTH_TOKEN);
             call.enqueue(allChurchResponseCallback);
         } else {
+            rlProgress.setVisibility(View.GONE);
             ApplicationUtility.openNetworkDialog(SelectchurchActivity.this);
         }
     }
@@ -128,6 +132,7 @@ public class SelectchurchActivity extends AppCompatActivity implements ChurchLis
 
         @Override
         public void onResponse(Response<AllChurchResponse> response, Retrofit retrofit) {
+            rlProgress.setVisibility(View.GONE);
             if (response.body().isSuccess()) {
                 setChurchList(response.body().getChurch());
             } else {
@@ -137,7 +142,7 @@ public class SelectchurchActivity extends AppCompatActivity implements ChurchLis
 
         @Override
         public void onFailure(Throwable t) {
-
+            rlProgress.setVisibility(View.GONE);
         }
     };
 
@@ -165,6 +170,7 @@ public class SelectchurchActivity extends AppCompatActivity implements ChurchLis
 
     private void followChurchAndProceed() {
         if (hasFollowed) {
+            rlProgress.setVisibility(View.VISIBLE);
             String jsonParam = UserNChurchUtils.prepareChurchJsonParam(user_id, followedChurch.getChurch_id());
             Log.e("JSONParam", jsonParam);
             APIServiceInterface apiService = retrofit.create(APIServiceInterface.class);
@@ -172,9 +178,11 @@ public class SelectchurchActivity extends AppCompatActivity implements ChurchLis
                 Call<CommonResponse> call = apiService.followChurch(jsonParam, StaticData.AUTH_TOKEN);
                 call.enqueue(followChurchResponse);
             } else {
+                rlProgress.setVisibility(View.GONE);
                 ApplicationUtility.openNetworkDialog((SelectchurchActivity) context);
             }
         } else {
+            rlProgress.setVisibility(View.GONE);
             Toast.makeText(context, "Follow a church first", Toast.LENGTH_SHORT).show();
         }
     }
@@ -182,6 +190,7 @@ public class SelectchurchActivity extends AppCompatActivity implements ChurchLis
     Callback<CommonResponse> followChurchResponse = new Callback<CommonResponse>() {
         @Override
         public void onResponse(Response<CommonResponse> response, Retrofit retrofit) {
+            rlProgress.setVisibility(View.GONE);
             Log.e("Response", response.body().getMessage());
             if (response.body().isSuccess()) {
                 saveChurchInfoInSession();
@@ -197,6 +206,7 @@ public class SelectchurchActivity extends AppCompatActivity implements ChurchLis
 
         @Override
         public void onFailure(Throwable t) {
+            rlProgress.setVisibility(View.GONE);
             Toast.makeText(context, "Failed adding church", Toast.LENGTH_SHORT).show();
         }
     };

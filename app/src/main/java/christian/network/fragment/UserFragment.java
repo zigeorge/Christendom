@@ -3,6 +3,7 @@ package christian.network.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,7 +67,7 @@ public class UserFragment extends Fragment {
         context = getActivity();
         lvUsers = (ListView) view.findViewById(R.id.lvUsers);
         Log.e("Members", users.size()+"");
-        UserListAdapter userListAdapter = new UserListAdapter(context, R.layout.user_row, users, getActivity());
+        UserListAdapter userListAdapter = new UserListAdapter(context, R.layout.user_row, users, (AppCompatActivity)getActivity());
         lvUsers.setAdapter(userListAdapter);
     }
 

@@ -308,7 +308,7 @@ public class MainActivity extends AppCompatActivity implements FeedsAdapter.OnCo
         }
         // Highlight the selected item, update the title, and close the drawer
         // Highlight the selected item has been done by NavigationView
-        // menuItem.setChecked(true);
+        menuItem.setChecked(true);
         setTitle(menuItem.getTitle());
         dlMain.closeDrawers();
     }

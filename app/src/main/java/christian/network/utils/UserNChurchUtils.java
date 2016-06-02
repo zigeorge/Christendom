@@ -1,10 +1,13 @@
 package christian.network.utils;
 
+import android.util.Log;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.TimeZone;
 
 /**
  * Created by User on 11-Apr-16.
@@ -53,19 +56,20 @@ public class UserNChurchUtils {
         return jSonParam;
     }
 
-    public static String getPostTime(Date postDate, long currentTimeMs) {
-        long remainingTime = currentTimeMs - postDate.getTime();
+    public static String getPostTime(long commentTImeMs, long currentTimeMs) {
+        long remainingTime = currentTimeMs - commentTImeMs;
         int day = (int) ((((remainingTime / 1000) / 60) / 60) / 24);
         remainingTime = remainingTime - (long) day * 24 * 60 * 60 * 1000;
         int hour = (int) (((remainingTime / 1000) / 60) / 60);
         remainingTime = remainingTime - (long) hour * 60 * 60 * 1000;
         int minute = (int) ((remainingTime / 1000) / 60);
-//        Log.e("TIME", remainingTime + "");
         String rTime = "";
         if (day > 0) {
             Calendar calendar = Calendar.getInstance();
-            calendar.setTime(postDate);
-            rTime = calendar.get(Calendar.DAY_OF_MONTH) + " " + getMonthName(calendar.get(Calendar.MONTH)) + " at " + calendar.get(Calendar.HOUR) + ":" + calendar.get(Calendar.MINUTE) + getAMPM(calendar.get(Calendar.AM_PM));
+            calendar.setTimeInMillis(commentTImeMs);
+            rTime = String.format("%02d-%s",calendar.get(Calendar.DAY_OF_MONTH),getMonthName(calendar.get(Calendar.MONTH))) +
+                    " at " + String.format("%02d:%02d ",calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE))
+                    + getAMPM(calendar.get(Calendar.AM_PM));
         } else if (day < 1 && hour > 0) {
             rTime = hour + " hrs";
         } else if (day < 1 && hour < 1 && minute >= 1) {

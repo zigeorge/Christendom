@@ -4,12 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,16 +20,16 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-import christian.network.R;
-import christian.network.interfaces.APIServiceInterface;
 import christian.network.CreateFeedActivity;
+import christian.network.R;
 import christian.network.adapters.FeedsAdapter;
 import christian.network.entity.Feed;
+import christian.network.interfaces.APIServiceInterface;
 import christian.network.responses.AllFeedsResponse;
 import christian.network.utils.ApplicationUtility;
 import christian.network.utils.StaticData;
 import christian.network.utils.UserNChurchUtils;
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.GsonConverterFactory;
@@ -39,6 +41,7 @@ public class HomeFragment extends Fragment {
     TextView tvWritePost;
     RecyclerView rvFeeds;
     CircleImageView ivProfileImage;
+    RelativeLayout rlProgress;
 
     Retrofit retrofit;
     APIServiceInterface apiService;
@@ -111,6 +114,8 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(context);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         rvFeeds.setLayoutManager(llm);
+        rlProgress = (RelativeLayout)view.findViewById(R.id.rlProgress);
+        rlProgress.setVisibility(View.VISIBLE);
     }
 
     private void setProfileImage() {
@@ -153,7 +158,8 @@ public class HomeFragment extends Fragment {
             Call<AllFeedsResponse> call = apiService.getAllFeed(jsonParam, StaticData.AUTH_TOKEN);
             call.enqueue(allFeedsResponseCallback);
         } else {
-            ApplicationUtility.openNetworkDialog(getActivity());
+            rlProgress.setVisibility(View.GONE);
+            ApplicationUtility.openNetworkDialog((AppCompatActivity)getActivity());
         }
     }
 
@@ -161,24 +167,26 @@ public class HomeFragment extends Fragment {
         @Override
         public void onResponse(Response<AllFeedsResponse> response, Retrofit retrofit) {
 //            Log.e("Response Size",response.body().getPost().size()+"");/
+            rlProgress.setVisibility(View.GONE);
             if (response.body().isSuccess()) {
                 feeds = response.body().getPost();
                 if (feeds != null) {
                     setFeedsAdapter();
                 }
             } else {
-                Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "You have no feed to display. Follow your friends and share your thoughts. You'll be able to see all the posts that your friends are sharing in this page.", Toast.LENGTH_LONG).show();
             }
         }
 
         @Override
         public void onFailure(Throwable t) {
+            rlProgress.setVisibility(View.GONE);
             Toast.makeText(context, "There is a problem connecting to server, please restart application", Toast.LENGTH_SHORT).show();
         }
     };
 
     private void setFeedsAdapter() {
-        feedsAdapter = new FeedsAdapter(feeds, context, getActivity());
+        feedsAdapter = new FeedsAdapter(feeds, context, (AppCompatActivity)getActivity());
         rvFeeds.setAdapter(feedsAdapter);
     }
 

@@ -79,6 +79,7 @@ public class WelcomeActivity extends AppCompatActivity implements GoogleApiClien
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     boolean isFirstTime = true;
+    String fcmToken = "";
 
     Context context;
 
@@ -87,7 +88,7 @@ public class WelcomeActivity extends AppCompatActivity implements GoogleApiClien
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         context = this;
-
+        
         checkInternet();
         FacebookSdk.sdkInitialize(context);
 
@@ -145,6 +146,8 @@ public class WelcomeActivity extends AppCompatActivity implements GoogleApiClien
 //                startActivity(new Intent(context, SignupActivity.class));
                 if (ApplicationUtility.checkInternet(context)) {
 //                    loginByGoogle();
+                    fcmToken = sharedPreferences.getString(StaticData.REG_ID,"");
+                    Log.e("TOKEN",fcmToken);
                     Toast.makeText(context, "Coming Soon!", Toast.LENGTH_SHORT).show();
                 } else {
                     ApplicationUtility.openNetworkDialog(WelcomeActivity.this);
@@ -239,7 +242,8 @@ public class WelcomeActivity extends AppCompatActivity implements GoogleApiClien
     // Facebook Signin ended
 
     private void signUpUser(Bundle bundleString, String authType) {
-        String jSonParam = ApplicationUtility.getSignUpJSONParam(bundleString, authType);
+        fcmToken = sharedPreferences.getString(StaticData.REG_ID,"");
+        String jSonParam = ApplicationUtility.getSignUpJSONParam(bundleString, authType, fcmToken);
         String imgUrl = bundleString.getString(StaticData.USER_IMAGE);
         String link = bundleString.getString(StaticData.ACCESSTOKEN_URL);
         try {

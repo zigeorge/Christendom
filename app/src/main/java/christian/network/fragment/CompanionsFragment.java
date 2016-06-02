@@ -5,10 +5,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -37,6 +39,7 @@ public class CompanionsFragment extends Fragment {
     private static final String ARG_PARAM2 = "title_text";
 
     ViewPager vpCompanions;
+    RelativeLayout rlProgress;
 
     Retrofit retrofit;
     APIServiceInterface apiService;
@@ -65,7 +68,6 @@ public class CompanionsFragment extends Fragment {
         user_id = context.getSharedPreferences(StaticData.APP_PREFERENCE,Context.MODE_PRIVATE).getString(StaticData.USER_ID,"");
         getActivity().setTitle(getArguments().getString(ARG_PARAM2));
         initWebService();
-        getAllUsers();
     }
 
     @Override
@@ -79,10 +81,13 @@ public class CompanionsFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initUI(view);
+        getAllUsers();
     }
 
     private void initUI(View view) {
         vpCompanions = (ViewPager) view.findViewById(R.id.vpCompanions);
+        rlProgress = (RelativeLayout) view.findViewById(R.id.rlProgress);
+        rlProgress.setVisibility(View.VISIBLE);
     }
 
     private void initWebService() {
@@ -100,13 +105,15 @@ public class CompanionsFragment extends Fragment {
             Call<AllUsersResponse> call = apiService.getAllUsers(jsonParam, StaticData.AUTH_TOKEN);
             call.enqueue(allUserResponseCallback);
         } else {
-            ApplicationUtility.openNetworkDialog(getActivity());
+            rlProgress.setVisibility(View.GONE);
+            ApplicationUtility.openNetworkDialog((AppCompatActivity)getActivity());
         }
     }
 
     Callback<AllUsersResponse> allUserResponseCallback = new Callback<AllUsersResponse>() {
         @Override
         public void onResponse(Response<AllUsersResponse> response, Retrofit retrofit) {
+            rlProgress.setVisibility(View.GONE);
             Log.e("Response", response.body().getMessage());
             if (response.body().getMessage().equalsIgnoreCase("success")) {
                 members = response.body().getAll_member_not_follow();
@@ -122,6 +129,7 @@ public class CompanionsFragment extends Fragment {
 
         @Override
         public void onFailure(Throwable t) {
+            rlProgress.setVisibility(View.GONE);
             Toast.makeText(context, "Failed to get all users, please try again by restarting from bgining", Toast.LENGTH_SHORT).show();
         }
     };

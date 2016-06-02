@@ -9,9 +9,11 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -176,6 +178,7 @@ public class CommentActivity extends AppCompatActivity {
     private void setDataInUI() {
         if (noOfLikes == 0) {
             if (!comments.isEmpty()) {
+                tvLikeDetails.setVisibility(View.VISIBLE);
                 tvLikeDetails.setText(comments.size() + " comments");
             } else {
                 tvLikeDetails.setVisibility(View.GONE);
@@ -185,7 +188,7 @@ public class CommentActivity extends AppCompatActivity {
             if (!comments.isEmpty()) {
                 tvLikeDetails.setText(noOfLikes + " likes " + comments.size() + " comments");
             } else {
-                tvLikeDetails.setText(noOfLikes + " likes");
+                tvLikeDetails.setText(noOfLikes + " people like this");
             }
         }
     }
@@ -197,7 +200,7 @@ public class CommentActivity extends AppCompatActivity {
     }
 
     private void setNoComments() {
-
+        setDataInUI();
     }
 
     private void submitComment() {

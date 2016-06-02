@@ -11,6 +11,7 @@
         <item name="colorAccent">@color/white</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:windowBackground">@color/white</item>
+        <item name="android:progressBarStyle">@android:style/Widget.DeviceDefault.ProgressBar.Small</item>
         <!--<item name="android:navigationBarColor">@color/color_primary_light</item>-->
     </style>
 
@@ -31,6 +32,7 @@
         <!--<item name="android:navigationBarColor">@color/black</item>-->
         <item name="android:alertDialogTheme">@style/myAlertDialog</item>
         <item name="floatingHintEditTextStyle">@style/Widget.FloatingHintEditText</item>
+        <item name="android:progressBarStyle">@android:style/Widget.DeviceDefault.ProgressBar.Small</item>
         <!-- You can also set colorControlNormal, colorControlActivated
            colorControlHighlight and colorSwitchThumbNormal. -->
     </style>
