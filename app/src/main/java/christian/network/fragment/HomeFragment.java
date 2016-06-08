@@ -70,6 +70,7 @@ public class HomeFragment extends Fragment {
         context = getActivity();
         setUserId();
         initWebService();
+
 //        UserFragment.isCompanion = false;
         try {
             onHomeFragmentResumed = (OnHomeFragmentResumed) context;
