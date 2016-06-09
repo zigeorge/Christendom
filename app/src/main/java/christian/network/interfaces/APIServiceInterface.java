@@ -5,6 +5,7 @@ import christian.network.responses.AllFeedsResponse;
 import christian.network.responses.AllUsersResponse;
 import christian.network.responses.CommentResponse;
 import christian.network.responses.CommonResponse;
+import christian.network.responses.FriendsResponse;
 import christian.network.responses.ProfileInfoResponse;
 import christian.network.responses.SignUpResponse;
 import retrofit.Call;
@@ -28,6 +29,9 @@ public interface APIServiceInterface {
 
     @GET("follow.php")
     Call<AllUsersResponse> getAllUsers(@Query("JSONParam") String jSonParam, @Query("authtoken") String authToken);
+
+    @GET("follow.php")
+    Call<FriendsResponse> getAllFollowingUsers(@Query("JSONParam") String jSonParam, @Query("authtoken") String authToken);
 
     @POST("follow.php")
     Call<CommonResponse> followUser(@Query("JSONParam") String jSonParam, @Query("authtoken") String authToken);

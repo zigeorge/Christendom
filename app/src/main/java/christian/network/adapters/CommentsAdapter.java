@@ -159,6 +159,8 @@ public class CommentsAdapter extends ArrayAdapter<Comment> {
             calendar.setTimeZone(TimeZone.getTimeZone("GMT+0"));
             calendar.setTime(commentDate);
             long commentTimeMs = calendar.getTimeInMillis();
+            Log.e("COMMENT","comment TIme: "+commentTimeMs);
+            Log.e("COMMENT","current TIme: "+currentTimeMs);
             timeStamp = UserNChurchUtils.getPostTime(commentTimeMs, currentTimeMs);
             return timeStamp;
         }

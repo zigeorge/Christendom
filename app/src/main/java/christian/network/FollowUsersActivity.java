@@ -102,7 +102,7 @@ public class FollowUsersActivity extends AppCompatActivity {
 
     private void getAllUsers() {
         if (ApplicationUtility.checkInternet(context)) {
-            String jsonParam = UserNChurchUtils.prepareUserJsonParam(user_id);
+            String jsonParam = UserNChurchUtils.prepareUserJsonParam(user_id,"true");
             Log.e("PastorJsonParam", jsonParam);
             Call<AllUsersResponse> call = apiService.getAllUsers(jsonParam, StaticData.AUTH_TOKEN);
             call.enqueue(allUserResponseCallback);

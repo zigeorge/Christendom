@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import christian.network.fragment.MyFriendsFragment;
 import de.hdodenhof.circleimageview.CircleImageView;
 import christian.network.adapters.FeedsAdapter;
 import christian.network.fragment.HomeFragment;
@@ -282,10 +283,13 @@ public class MainActivity extends AppCompatActivity implements FeedsAdapter.OnCo
                 fabMain.setVisibility(View.GONE);
 //                UserFragment.isCompanion = true;
                 break;
-            /*case R.id.nav_my_profile:
+            case R.id.nav_my_friends:
 //                fragmentClass = ThirdFragment.class;
+                isCompanion = true;
+                fragment = MyFriendsFragment.newInstance(user_id, menuItem.getTitle().toString());
+                fabMain.setVisibility(View.GONE);
                 break;
-            case R.id.nav_settings:
+           /* case R.id.nav_settings:
 //                fragmentClass = ThirdFragment.class;
                 break;
             case R.id.nav_share_friends:

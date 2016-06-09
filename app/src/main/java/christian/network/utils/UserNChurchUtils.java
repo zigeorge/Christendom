@@ -24,8 +24,8 @@ public class UserNChurchUtils {
         return jSONParam;
     }
 
-    public static String prepareUserJsonParam(String user_id) {
-        String jSONParam = "{\"" + StaticData.USER_ID + "\":\"" + user_id + "\",\"nyf\":\"true\"}";
+    public static String prepareUserJsonParam(String user_id, String nyf) {
+        String jSONParam = "{\"" + StaticData.USER_ID + "\":\"" + user_id + "\",\"nyf\":\"" + nyf + "\"}";
         try {
             jSONParam = URLEncoder.encode(jSONParam, "UTF-8");
         } catch (UnsupportedEncodingException e) {
