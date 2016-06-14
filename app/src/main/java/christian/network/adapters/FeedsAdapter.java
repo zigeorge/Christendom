@@ -220,6 +220,7 @@ public class FeedsAdapter extends RecyclerView.Adapter<FeedsAdapter.FeedViewHold
         dtFormat.setTimeZone(TimeZone.getTimeZone("GMT+0"));
         Date commentDate = ApplicationUtility.formatDate(date, dtFormat);
         Calendar calendar = Calendar.getInstance();
+        calendar.setTimeZone(TimeZone.getTimeZone("GMT+0"));
         calendar.setTime(commentDate);
         long commentTimeMs = calendar.getTimeInMillis();
         String timeStamp = UserNChurchUtils.getPostTime(commentTimeMs, currentTimeMs);
@@ -406,6 +407,7 @@ public class FeedsAdapter extends RecyclerView.Adapter<FeedsAdapter.FeedViewHold
                 Log.e("Message", response.body().getMessage());
                 feeds.remove(delPosition);
                 notifyDataSetChanged();
+                Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT);
             } else {
                 notifyDataSetChanged();
             }

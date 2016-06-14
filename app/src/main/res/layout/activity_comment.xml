@@ -75,4 +75,9 @@
         android:layout_marginBottom="@dimen/dim5"
         android:layout_marginTop="@dimen/dim5" />
 
+    <ProgressBar
+        android:id="@+id/pbComments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 </RelativeLayout>

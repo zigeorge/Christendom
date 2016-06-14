@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +41,7 @@ public class CommentActivity extends AppCompatActivity {
     ImageView ivWrite;
     EditText etWriteComment;
     ListView lvComments;
+    ProgressBar pbComments;
 
     ArrayList<Comment> comments = new ArrayList<>();
     CommentsAdapter commentsAdapter;
@@ -72,6 +74,8 @@ public class CommentActivity extends AppCompatActivity {
         ivWrite = (ImageView) findViewById(R.id.ivWrite);
         etWriteComment = (EditText) findViewById(R.id.etWriteComment);
         lvComments = (ListView) findViewById(R.id.lvComments);
+        pbComments = (ProgressBar) findViewById(R.id.pbComments);
+        pbComments.setVisibility(View.VISIBLE);
     }
 
     private void initWebService() {
@@ -114,7 +118,7 @@ public class CommentActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Submit Comment
-                if (TextUtils.isEmpty(etWriteComment.getText().toString())) {
+                if (TextUtils.isEmpty(etWriteComment.getText().toString())||ApplicationUtility.isOnlyBlankSpaces(etWriteComment.getText().toString())) {
                     etWriteComment.setError("You need to write something first");
                 } else {
                     description = etWriteComment.getText().toString();
@@ -164,6 +168,7 @@ public class CommentActivity extends AppCompatActivity {
         aComment.setLast_name(user_lName);
         aComment.setImage(user_image);
         aComment.setCreated_date("Posting...");
+        aComment.setPoster_id(user_id);
         Log.e("New Comment", aComment.getDescription() + "\n " + aComment.getLast_name() + "\n " + aComment.getImage());
         if (comments.isEmpty()) {
             comments.add(aComment);
@@ -222,6 +227,7 @@ public class CommentActivity extends AppCompatActivity {
     Callback<CommentResponse> commentResponseCallBack = new Callback<CommentResponse>() {
         @Override
         public void onResponse(Response<CommentResponse> response, Retrofit retrofit) {
+            pbComments.setVisibility(View.GONE);
             if (response.body().isSuccess()) {
                 Log.e("Comment", "" + response.body().getComments().get(0).getDescription());
                 setAllComments(response.body().getComments());
@@ -233,6 +239,7 @@ public class CommentActivity extends AppCompatActivity {
 
         @Override
         public void onFailure(Throwable t) {
+            pbComments.setVisibility(View.GONE);
             Toast.makeText(context, "Failed Getting comment!", Toast.LENGTH_SHORT).show();
         }
     };
@@ -261,7 +268,6 @@ public class CommentActivity extends AppCompatActivity {
         if (hasChanged) {
             comments.get(comments.size() - 1).setCreated_date("Just now");
             commentsAdapter.notifyDataSetChanged();
-
         } else {
             comments.remove(comments.size() - 1);
             commentsAdapter.notifyDataSetChanged();

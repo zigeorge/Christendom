@@ -154,13 +154,14 @@ public class CommentsAdapter extends ArrayAdapter<Comment> {
             cal.setTimeZone(TimeZone.getTimeZone("GMT+0"));
             long currentTimeMs = cal.getTimeInMillis();
             SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            dtFormat.setTimeZone(TimeZone.getTimeZone("GMT+0"));
             Date commentDate = ApplicationUtility.formatDate(timeStamp, dtFormat);
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeZone(TimeZone.getTimeZone("GMT+0"));
             calendar.setTime(commentDate);
             long commentTimeMs = calendar.getTimeInMillis();
-            Log.e("COMMENT","comment TIme: "+commentTimeMs);
-            Log.e("COMMENT","current TIme: "+currentTimeMs);
+            Log.e("COMMENT", "comment TIme: " + commentTimeMs);
+            Log.e("COMMENT", "current TIme: " + currentTimeMs);
             timeStamp = UserNChurchUtils.getPostTime(commentTimeMs, currentTimeMs);
             return timeStamp;
         }
@@ -217,9 +218,9 @@ public class CommentsAdapter extends ArrayAdapter<Comment> {
         @Override
         public void onResponse(Response<CommonResponse> response, Retrofit retrofit) {
             if (response.body().isSuccess()) {
-                Log.e("Message", response.body().getMessage());
                 comments.remove(delPosition);
                 notifyDataSetChanged();
+                Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT);
             } else {
                 notifyDataSetChanged();
             }

@@ -194,6 +194,7 @@ public class FeedsAdapterProfile extends RecyclerView.Adapter<FeedsAdapterProfil
         dtFormat.setTimeZone(TimeZone.getTimeZone("GMT+0"));
         Date commentDate = ApplicationUtility.formatDate(date, dtFormat);
         Calendar calendar = Calendar.getInstance();
+        calendar.setTimeZone(TimeZone.getTimeZone("GMT+0"));
         calendar.setTime(commentDate);
         long commentTimeMs = calendar.getTimeInMillis();
         String timeStamp = UserNChurchUtils.getPostTime(commentTimeMs, currentTimeMs);

@@ -58,6 +58,8 @@ public class UserNChurchUtils {
 
     public static String getPostTime(long commentTImeMs, long currentTimeMs) {
         long remainingTime = currentTimeMs - commentTImeMs;
+        Log.e("CURRENT TIME", currentTimeMs+"");
+        Log.e("COMMENT TIME", commentTImeMs+"");
         int day = (int) ((((remainingTime / 1000) / 60) / 60) / 24);
         remainingTime = remainingTime - (long) day * 24 * 60 * 60 * 1000;
         int hour = (int) (((remainingTime / 1000) / 60) / 60);

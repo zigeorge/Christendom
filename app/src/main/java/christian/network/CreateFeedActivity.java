@@ -159,7 +159,7 @@ public class CreateFeedActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Post Feed
-                if (TextUtils.isEmpty(etWritePost.getText())) {
+                if (TextUtils.isEmpty(etWritePost.getText())||ApplicationUtility.isOnlyBlankSpaces(etWritePost.getText().toString())) {
                     etWritePost.setError("You need to write something before post");
                 } else {
                     etWritePost.setClickable(false);
@@ -167,6 +167,7 @@ public class CreateFeedActivity extends AppCompatActivity {
                     pbPostFeed.setVisibility(View.VISIBLE);
                     ivPost.setVisibility(View.GONE);
                     rlProgress.setVisibility(View.VISIBLE);
+                    ApplicationUtility.hideKeyboard(context,ivPost);
                     postFeed();
                 }
 
